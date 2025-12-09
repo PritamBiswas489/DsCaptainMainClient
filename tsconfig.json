@@ -1,0 +1,18 @@
+{
+  "extends": "@react-native/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "." /* Base directory to resolve non-absolute module names. */,
+    "paths": {
+    "@src/*": ["src/*"],
+    "@screens/*": ["src/screens/*"],
+    "@theme/*": ["src/theme/*"],
+    "@style/*": ["src/style/*"],
+    "@utils/*": ["src/utils/*"],
+    "@assets/*": ["src/assets/*"],
+    "@commonComponents/*": ["src/commonComponents/*"],
+    "@otherComponent/*": ["src/otherComponent/*"],
+    "@App/*": ["App/*"]
+    }
+    },
+    "exclude": ["node_modules", "babel.config.js", "metro.config.js", "jest.config.js"]
+}

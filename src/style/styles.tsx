@@ -1,0 +1,156 @@
+import appColors from '@theme/appColors';
+import {fontSizes, windowHeight, windowWidth} from '@theme/appConstant';
+import appFonts from '@theme/appFonts';
+import {StyleSheet} from 'react-native';
+
+export const GlobalStyle = StyleSheet.create({
+  mainView: {
+    flex: 1,
+    backgroundColor: appColors.white,
+  },
+  center: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modal: {
+    paddingHorizontal: windowWidth(6),
+    paddingVertical: windowHeight(2),
+    borderTopLeftRadius: windowHeight(3),
+    borderTopRightRadius: windowHeight(3),
+    position: 'absolute',
+    bottom: windowHeight(0),
+    width: '100%',
+    zIndex: 1,
+    backgroundColor: appColors.white,
+  },
+  horizontalLine: {
+    height: 1,
+    borderWidth: 0.3,
+    borderColor: appColors.border,
+    marginTop: windowHeight(1.8),
+    marginBottom: windowHeight(0.8),
+  },
+  verticalLine: {
+    height: windowHeight(7),
+    borderColor: appColors.border,
+    borderWidth: 0.3,
+    width: 0,
+    marginTop: 6,
+    marginHorizontal: windowWidth(2.6),
+    marginVertical: 6,
+  },
+  dashLine: {
+    height: 1,
+    borderWidth: 1,
+    borderColor: appColors.border,
+    borderStyle: 'dashed',
+    marginTop: windowWidth(4),
+    marginBottom: windowWidth(2),
+    marginHorizontal: windowWidth(3),
+  },
+  circleView: {
+    height: windowHeight(5),
+    width: windowHeight(5),
+    borderRadius: windowHeight(20),
+    backgroundColor: appColors.success,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  dot: {
+    height: windowHeight(0.7),
+    width: windowWidth(1.4),
+    borderRadius: windowHeight(12),
+    backgroundColor: appColors.lightText,
+    marginHorizontal: windowWidth(1),
+    marginTop: windowWidth(1),
+    right: windowWidth(0.3),
+  },
+  lineContainer: {
+    height: 1,
+    width: '100%',
+    borderRadius: 1,
+    borderWidth: 1,
+    borderColor: appColors.border,
+    borderStyle: 'dashed',
+    zIndex: 0,
+    marginTop: windowHeight(1.3),
+    marginBottom: windowHeight(1),
+  },
+  dottedLine: {
+    position: 'absolute',
+    left: 0,
+    bottom: 0,
+    width: '100%',
+    height: 1,
+    backgroundColor: 'white',
+    zIndex: 1,
+  },
+  title: {
+    color: appColors.darkText,
+    fontFamily: appFonts.NunitoBold,
+    fontSize: fontSizes.FONT4,
+  },
+  contentContainerStyle: {
+    paddingBottom: windowHeight(3),
+  },
+  content: {
+    color: appColors.lightText,
+    fontFamily: appFonts.NunitoRegular,
+    fontSize: fontSizes.FONT3HALF,
+  },
+  mainContainer: {
+    marginVertical: windowHeight(2),
+    marginTop: windowHeight(2),
+  },
+  bottomContainer: {
+    bottom: windowWidth(7),
+    flex: 1,
+    right: 0,
+    left: 0,
+    position: 'absolute',
+  },
+  activeRadioButton: {
+    height: windowHeight(3),
+    width: windowWidth(6),
+    borderRadius: windowHeight(10),
+    backgroundColor: appColors.lightOrange,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  innerCircle: {
+    height: windowWidth(3),
+    width: windowWidth(3),
+    borderRadius: windowHeight(10),
+    backgroundColor: appColors.primary,
+  },
+  radioButton: {
+    height: windowHeight(3),
+    width: windowWidth(6),
+    borderColor: appColors.border,
+    borderWidth: 1,
+    borderRadius: windowHeight(10),
+    backgroundColor: appColors.white,
+  },
+  blankView: {
+    height: windowHeight(3),
+  },
+  dropdown: {
+    width: windowWidth(35),
+    marginHorizontal: 0,
+    paddingHorizontal: 0,
+    height: windowHeight(6.2),
+    right: windowWidth(4),
+  },
+  dropdownOptionStyle: {
+    width: windowWidth(35),
+    marginHorizontal: 0,
+    paddingHorizontal: 0,
+  },
+  overlayStyle: {
+    alignItems: 'flex-end',
+    width: '95%',
+  },
+  iconStyle: {
+    paddingHorizontal: windowWidth(3),
+  },
+});

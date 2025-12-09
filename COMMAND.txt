@@ -1,0 +1,6 @@
+keytool -genkeypair -v -storetype PKCS12 -keystore dorkarmall-in-seller.keystore -alias dorkarmall-in-seller -keyalg RSA -keysize 2048 -validity 10000
+
+123456
+
+dorkarmall-in-seller.keystore
+ 

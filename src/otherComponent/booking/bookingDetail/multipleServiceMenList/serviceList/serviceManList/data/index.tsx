@@ -1,0 +1,86 @@
+import {
+  customer,
+  customer1,
+  customer2,
+  customer3,
+  customer4,
+  customer5,
+  servicemen,
+  servicemen1,
+  servicemen2,
+  serviceMen3,
+} from '@utils/images';
+import {ServiceManType} from './types';
+
+export const serviceMenData: Array<ServiceManType> = [
+  {
+    id: 0,
+    user: servicemen,
+    name: 'booking.serviceMan1',
+    experience: 2,
+    rate: 3.5,
+  },
+  {
+    id: 1,
+    user: servicemen1,
+    name: 'booking.serviceMen',
+    experience: 3,
+    rate: 3.5,
+  },
+  {
+    id: 2,
+    user: servicemen2,
+    name: 'booking.serviceMen1',
+    experience: 4,
+    rate: 3.5,
+  },
+  {
+    id: 3,
+    user: serviceMen3,
+    name: 'booking.serviceMen2',
+    experience: 1.5,
+    rate: 3.5,
+  },
+  {
+    id: 4,
+    user: customer,
+    name: 'booking.serviceMen',
+    experience: 2.5,
+    rate: 3.5,
+  },
+  {
+    id: 5,
+    user: customer1,
+    name: 'serviceMen.name',
+    experience: 4,
+    rate: 3.5,
+  },
+  {
+    id: 6,
+    user: customer2,
+    name: 'serviceMen.service',
+    experience: 1,
+    rate: 3.5,
+  },
+  {
+    id: 7,
+    user: customer3,
+    name: 'serviceMen.name1',
+    experience: 6,
+    rate: 3.5,
+  },
+  {
+    id: 8,
+    user: customer4,
+    name: 'serviceMen.name2',
+    experience: 1,
+    rate: 3.5,
+  },
+  {
+    id: 9,
+    user: customer5,
+    name: 'serviceMen.name',
+    experience: 8,
+    rate: 3.5,
+  },
+];

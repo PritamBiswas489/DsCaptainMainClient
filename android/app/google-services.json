@@ -1,0 +1,115 @@
+{
+  "project_info": {
+    "project_number": "437006760459",
+    "project_id": "dorkar-mall",
+    "storage_bucket": "dorkar-mall.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437006760459:android:ce4c7e15d8dddc1149e50e",
+        "android_client_info": {
+          "package_name": "com.dorkar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAU7rWnOtwR50fYFFCs0RNNTcNe1LyLa_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "437006760459-7umtdm33qj8pl7h09rtq1ksk8f5na71m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437006760459:android:2f377a80eba70dc749e50e",
+        "android_client_info": {
+          "package_name": "com.dorkar.boy_mall"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAU7rWnOtwR50fYFFCs0RNNTcNe1LyLa_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "437006760459-7umtdm33qj8pl7h09rtq1ksk8f5na71m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437006760459:android:da9ac665120e9e3449e50e",
+        "android_client_info": {
+          "package_name": "com.dorkar.mall_user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "437006760459-0hcqtjo4a4geq6gsl4mf9c6ipcpnsr48.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dorkar.mall_user",
+            "certificate_hash": "0ebe169c7d7d038d7d8cba842c4286dd5ce37522"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAU7rWnOtwR50fYFFCs0RNNTcNe1LyLa_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "437006760459-7umtdm33qj8pl7h09rtq1ksk8f5na71m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437006760459:android:378168aadeb04fa849e50e",
+        "android_client_info": {
+          "package_name": "com.dorkarmall.in_seller"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAU7rWnOtwR50fYFFCs0RNNTcNe1LyLa_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "437006760459-7umtdm33qj8pl7h09rtq1ksk8f5na71m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
