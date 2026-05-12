@@ -25,6 +25,7 @@ export default function GridButton({
   const {t} = useValues()
   return (
     <View style={styles.container}>
+    {label1 && (
       <TouchableOpacity
         activeOpacity={0.9}
         onPress={
@@ -40,9 +41,9 @@ export default function GridButton({
             {t(label1)}
           </Text>
         </LinearGradient>
-      </TouchableOpacity>
+      </TouchableOpacity>)}
 
-      <TouchableOpacity
+      {label &&<TouchableOpacity
         activeOpacity={0.9}
         onPress={
           onButtonClick as unknown as (event: GestureResponderEvent) => void
@@ -55,7 +56,7 @@ export default function GridButton({
           ]}>
           <Text style={[styles.buttonText, buttonTextStyle]}>{t(label)}</Text>
         </LinearGradient>
-      </TouchableOpacity>
+      </TouchableOpacity>}
     </View>
   );
 }

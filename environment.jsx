@@ -1,27 +1,27 @@
 export const env = {
   type: 'dev', //prod staging dev
   appUrls: {
-    dev: {
-      //apiUrl: 'https://dorkar.aqualeafitsol.com',
+    prod: {
+      //apiUrl: 'https://service.dorkar.in',
       apiUrl: 'https://service.dorkar.in',
     },
     staging: {
-      apiUrl: 'https://dorkar.aqualeafitsol.com',
+      apiUrl: 'https://service.dorkar.in',
     },
     prod: {
-      apiUrl: 'https://dorkar.aqualeafitsol.com',
+      apiUrl: 'https://service.dorkar.in',
     },
   },
   mediaUrls: {
     dev: {
-      //apiUrl: 'https://dorkar.aqualeafitsol.com/storage/app/public',
+      //apiUrl: 'https://service.dorkar.in/storage/app/public',
       apiUrl: 'https://service.dorkar.in/storage/app/public',
     },
     staging: {
-      apiUrl: 'https://dorkar.aqualeafitsol.com/storage/app/public',
+      apiUrl: 'https://service.dorkar.in/storage/app/public',
     },
     prod: {
-      apiUrl: 'https://dorkar.aqualeafitsol.com/storage/app/public',
+      apiUrl: 'https://service.dorkar.in/storage/app/public',
     },
   },
 };
@@ -30,24 +30,24 @@ export const envStore = {
   type: 'dev', //prod staging dev
   appUrls: {
     dev: {
-      apiUrl: 'https://admin.dorkarmall.in',
+      apiUrl: 'https://mall.dorkar.in',
     },
     staging: {
-      apiUrl: 'https://admin.dorkarmall.in',
+      apiUrl: 'https://mall.dorkar.in',
     },
     prod: {
-      apiUrl: 'https://admin.dorkarmall.in',
+      apiUrl: 'https://mall.dorkar.in',
     },
   },
   mediaUrls: {
     dev: {
-      apiUrl: 'https://admin.dorkarmall.in/storage/app/public',
+      apiUrl: 'https://mall.dorkar.in/storage/app/public',
     },
     staging: {
-      apiUrl: 'https://admin.dorkarmall.in/storage/app/public',
+      apiUrl: 'https://mall.dorkar.in/storage/app/public',
     },
     prod: {
-      apiUrl: 'https://admin.dorkarmall.in/storage/app/public',
+      apiUrl: 'https://mall.dorkar.in/storage/app/public',
     },
   },
 };

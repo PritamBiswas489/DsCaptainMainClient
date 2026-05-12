@@ -7,6 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import appColors from '@theme/appColors';
 import {useValues} from '../../../../../App';
+ 
 
 type routeProps = NativeStackNavigationProp<RootStackParamList>;
 
@@ -22,27 +23,30 @@ export default function ContentData({
     <View style={styles.container}>
       <Text style={styles.title}>{t('introSlider.loginApp')}</Text>
       <GridButton
-        label1="introSlider.provider"
+        // label1="introSlider.provider"
         onButtonClick={() => {
           navigate('Login', {serviceMenLogin: true});
         }}
         label="introSlider.servicemen"
-        onButton1Click={() => {
-          navigate('Login');
-        }}
+        // onButton1Click={() => {
+        //   navigate('Login');
+        // }}
         buttonStyle={styles.buttonStyle}
         buttonTextStyle={styles.buttonText}
         btn1Color={isDark ? appColors.darkTheme : appColors.white}
         buttonContainerStyle={styles.buttonContainer}
         button1TextStyle={styles.button1TextStyle}
       />
+      
       <View style={styles.row}>
         <TouchableOpacity>
           <Text style={styles.text}>{t('introSlider.anAccount')} </Text>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.9}
-          onPress={() => setOptionModal(true)}>
+          // onPress={() => setOptionModal(true)}
+          onPress={() => navigate('StoreRegister')}
+          >
           <Text
             style={[
               styles.signUp,
