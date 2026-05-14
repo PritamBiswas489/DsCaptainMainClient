@@ -76,6 +76,9 @@ interface State {
   selectedAddonsList: string[],
   fromTime: string,
   toTime: string,
+
+  anotherFromTime: string,
+  anotherToTime: string,
 }
 
 const initialState: State = {
@@ -112,6 +115,8 @@ const initialState: State = {
   selectedAddonsList: [],
   fromTime: '',
   toTime: '',
+  anotherFromTime: '',
+  anotherToTime: '',
 }
 
 type Action =
@@ -148,8 +153,11 @@ type Action =
   | { type: 'SET_SELECTED_ADDONS_LIST'; payload: typeof initialState.selectedAddonsList }
   | { type: 'SET_FROM_TIME'; payload: typeof initialState.fromTime }
   | { type: 'SET_TO_TIME'; payload: typeof initialState.toTime }
+  | { type: 'SET_ANOTHER_FROM_TIME'; payload: typeof initialState.anotherFromTime }
+  | { type: 'SET_ANOTHER_TO_TIME'; payload: typeof initialState.anotherToTime }
   | { type: 'RESET_ERRORS' }
   | { type: 'RESET_ALL' };
+
 
 
 function reducer(state: State, action: Action): State {
@@ -218,6 +226,10 @@ function reducer(state: State, action: Action): State {
       return { ...state, fromTime: action.payload };
     case 'SET_TO_TIME':
       return { ...state, toTime: action.payload };
+    case 'SET_ANOTHER_FROM_TIME':
+      return { ...state, anotherFromTime: action.payload };
+    case 'SET_ANOTHER_TO_TIME':
+      return { ...state, anotherToTime: action.payload };
     case 'RESET_ERRORS':
       return {
         ...state,
@@ -251,7 +263,9 @@ export function VendorAddItem() {
   const getItemDetails = async () => {
     FORM_DISPATCH({ type: 'RESET_ALL' })
     setProcessingLoader(true)
-    const response: Response = await retrieveItemDetails(route?.params?.id)
+    const response: Response = await retrieveItemDetails(route?.params?.id);
+
+    console.log('payload: response?.data?.another_available_time_ends', response?.data?.another_available_time_ends);
 
     setProcessingLoader(false)
 
@@ -266,12 +280,36 @@ export function VendorAddItem() {
       FORM_DISPATCH({ type: 'SET_CATEGORY', payload: response?.data?.category_ids[0]?.id || '' })
       FORM_DISPATCH({ type: 'SET_SUB_CATEGORY', payload: response?.data?.category_ids[1]?.id  || '' })
       FORM_DISPATCH({ type: 'SET_MAXIMUM_ORDER_QTY', payload: response?.data?.maximum_cart_quantity ? response?.data?.maximum_cart_quantity.toString() : '' })
-      FORM_DISPATCH({ type: 'SET_FROM_TIME', payload: response?.data?.available_time_starts || '' })
-      FORM_DISPATCH({ type: 'SET_TO_TIME', payload: response?.data?.available_time_ends || '' })
+      // FORM_DISPATCH({ type: 'SET_FROM_TIME', payload: response?.data?.available_time_starts || '' })
+      // FORM_DISPATCH({ type: 'SET_TO_TIME', payload: response?.data?.available_time_ends || '' })
       FORM_DISPATCH({ type: 'SET_TOTAL_STOCKS', payload: response?.data?.stock ? response?.data?.stock.toString() : '' })
       FORM_DISPATCH({ type: 'SET_STOCK_UNIT', payload: response?.data?.unit_id ? response?.data?.unit_id.toString() : '' })
       FORM_DISPATCH({ type: 'SET_ITEM_TYPE', payload: response?.data?.veg === 0 ? 'noveg' : 'veg' })
       FORM_DISPATCH({ type: 'SET_SELECTED_ATTRIBUTES', payload: response?.data?.attributes })
+      // FORM_DISPATCH({ type: 'SET_ANOTHER_FROM_TIME', payload: response?.data?.another_available_time_starts || ''})
+      // FORM_DISPATCH({ type: 'SET_ANOTHER_TO_TIME', payload: response?.data?.another_available_time_ends || ''})
+
+      FORM_DISPATCH({
+        type: 'SET_FROM_TIME',
+        payload: convertTo12Hour(response?.data?.available_time_starts || ''),
+      })
+
+      FORM_DISPATCH({
+        type: 'SET_TO_TIME',
+        payload: convertTo12Hour(response?.data?.available_time_ends || ''),
+      })
+
+      FORM_DISPATCH({
+        type: 'SET_ANOTHER_FROM_TIME',
+        payload: convertTo12Hour(response?.data?.another_available_time_starts || ''),
+      })
+
+      FORM_DISPATCH({
+        type: 'SET_ANOTHER_TO_TIME',
+        payload: convertTo12Hour(response?.data?.another_available_time_ends || ''),
+      })
+      
+
       if (response?.data?.choice_options) {
         const attributeVariants = response?.data?.choice_options.map((chOpt: any, _: number) => {
           if (chOpt?.name) {
@@ -643,19 +681,70 @@ export function VendorAddItem() {
     return valid
   }
 
- function convertTo24Hour(time12h: string): string {
-    const [time, modifier] = time12h.split(' ');
-    let [hours, minutes] = time.split(':');
+//  function convertTo24Hour(time12h: string): string {
+//     const [time, modifier] = time12h.split(' ');
+//     let [hours, minutes] = time.split(':');
     
-    if (hours === '12') {
-        hours = '00';
-    }
+//     if (hours === '12') {
+//         hours = '00';
+//     }
     
-    if (modifier === 'PM') {
-        hours = (parseInt(hours, 10) + 12).toString();
-    }
+//     if (modifier === 'PM') {
+//         hours = (parseInt(hours, 10) + 12).toString();
+//     }
     
-    return `${hours}:${minutes}:00`;
+//     return `${hours}:${minutes}:00`;
+// }
+
+
+function convertTo24Hour(time: string): string {
+  if (!time) return '00:00:00';
+
+  const cleanTime = time.replace(/\s+/g, ' ').trim();
+
+  // Already 24-hour format
+  if (/^\d{2}:\d{2}:\d{2}$/.test(cleanTime)) {
+    return cleanTime;
+  }
+
+  // Match 12-hour format
+  const match = cleanTime.match(/(\d{1,2}):(\d{2})\s?(AM|PM)/i);
+
+  if (!match) {
+    return '00:00:00';
+  }
+
+  let hours = parseInt(match[1], 10);
+  const minutes = match[2];
+  const modifier = match[3].toUpperCase();
+
+  if (modifier === 'PM' && hours !== 12) {
+    hours += 12;
+  }
+
+  if (modifier === 'AM' && hours === 12) {
+    hours = 0;
+  }
+
+  return `${hours.toString().padStart(2, '0')}:${minutes}:00`;
+}
+
+
+function convertTo12Hour(time24: string): string {
+  if (!time24) return '';
+
+  const [hourString, minutes] = time24.split(':');
+  let hour = parseInt(hourString, 10);
+
+  const ampm = hour >= 12 ? 'PM' : 'AM';
+
+  hour = hour % 12;
+
+  if (hour === 0) {
+    hour = 12;
+  }
+
+  return `${hour}:${minutes} ${ampm}`;
 }
 
 
@@ -713,8 +802,12 @@ export function VendorAddItem() {
     // console.log(convertTo24Hour(FORM_STATE.toTime))
     // return;
     
-    formData.append('available_time_starts', convertTo24Hour(FORM_STATE.fromTime))
-    formData.append('available_time_ends', convertTo24Hour(FORM_STATE.toTime))
+    formData.append('available_time_starts', FORM_STATE.fromTime ? convertTo24Hour(FORM_STATE.fromTime) : '' )
+    formData.append('available_time_ends', FORM_STATE.toTime ? convertTo24Hour(FORM_STATE.toTime) : '')
+
+    formData.append('another_available_time_starts', FORM_STATE.anotherFromTime ? convertTo24Hour(FORM_STATE.anotherFromTime) : '')
+    formData.append('another_available_time_ends', FORM_STATE.anotherToTime ? convertTo24Hour(FORM_STATE.anotherToTime) : '')
+
     //thumbnail images
     if (FORM_STATE.thumbnailImage && isFileProtocol(FORM_STATE.thumbnailImage)) {
       formData.append('image', {
@@ -763,6 +856,8 @@ export function VendorAddItem() {
       headers: undefined,
       config: undefined
     }
+    
+    // console.log('formData', formData);return;
 
     if (FORM_STATE.itemId) {
       formData.append('id', FORM_STATE.itemId)
@@ -771,8 +866,8 @@ export function VendorAddItem() {
       response = await createVendorItems(formData)
     }
 
-    console.log('item add/update response', response.data)
-    
+    // console.log('item add/update response', response.data)
+    // return;
    
     if (response?.data?.message) {
       Toast.show({
@@ -929,6 +1024,24 @@ export function VendorAddItem() {
           setToTime={(value: string) => {
             FORM_DISPATCH({ type: 'SET_TO_TIME', payload: value })
           }}
+
+          anotherFromTime={FORM_STATE.anotherFromTime}
+          anotherToTime={FORM_STATE.anotherToTime}
+
+          setAnotherFromTime={(value) =>
+            FORM_DISPATCH({
+              type: 'SET_ANOTHER_FROM_TIME',
+              payload: value,
+            })
+          }
+
+          setAnotherToTime={(value) =>
+            FORM_DISPATCH({
+              type: 'SET_ANOTHER_TO_TIME',
+              payload: value,
+            })
+          }
+
         />
         <GradientBtn
           label={FORM_STATE.itemId ? "newDeveloper.UpdateItem" : "newDeveloper.CreateItem"}

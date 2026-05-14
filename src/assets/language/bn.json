@@ -1055,7 +1055,8 @@
             "Pendingwithdrawn":"Pending withdrawn",
             "Alreadywithdrawn":"Already withdrawn",
             "Totalearning":"Total earning",
-            "NotificationSound":"Notification Sound"
+            "NotificationSound":"Notification Sound",
+            "AvailableAnotherSlots":"Another available start and end time"
 
 
              

@@ -102,7 +102,11 @@ export default function InputView(
     fromTime,
     toTime,
     setFromTime,
-    setToTime
+    setToTime,
+    anotherFromTime,
+    anotherToTime,
+    setAnotherFromTime,
+    setAnotherToTime
 
   }: {
     itemTitle: string,
@@ -158,6 +162,11 @@ export default function InputView(
     toTime: string,
     setFromTime: (value: string) => void,
     setToTime: (value: string) => void,
+    anotherFromTime: string,
+    anotherToTime: string,
+
+    setAnotherFromTime: (value: string) => void,
+    setAnotherToTime: (value: string) => void,
   }
 ) {
   const { t, isDark } = useValues();
@@ -390,6 +399,12 @@ export default function InputView(
 
   const [fromTimePicker, setFromTimePicker] = useState(false)
   const [toTimePicker, setToTimePicker] = useState(false)
+
+  // const [anotherFromTime, setAnotherFromTime] = useState('');
+  // const [anotherToTime, setAnotherToTime] = useState('');
+
+  const [anotherFromTimePicker, setAnotherFromTimePicker] = useState(false);
+  const [anotherToTimePicker, setAnotherToTimePicker] = useState(false);
 
 
 
@@ -694,6 +709,76 @@ export default function InputView(
             {fromTimePicker && <TimepickerSelectTimeTwentyFourHours setDatePicker={setFromTimePicker} setScheduleDate={setFromTime} />}
             {toTimePicker && <TimepickerSelectTimeTwentyFourHours setDatePicker={setToTimePicker} setScheduleDate={setToTime} />}
           </View>
+
+          <View style={{ marginTop: 10, marginLeft: windowWidth(5), }}>
+            <Text style={{ fontSize: windowHeight(2), color: appColors.primary }}>
+              {t('newDeveloper.AvailableAnotherSlots')}
+            </Text>
+          </View>
+
+          {/* Another Available Slot */}
+
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+          
+          {/* Another Start Time */}
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            activeOpacity={0.9}
+            onPress={() => {
+              setAnotherFromTimePicker(true);
+            }}>
+            <TextInputComponent
+              placeholder={t('newDeveloper.Timestarts')}
+              value={anotherFromTime}
+              editable={false}
+              onChangeText={() => {}}
+              containerStyle={{
+                flex: 1,
+                marginHorizontal: windowWidth(2),
+              }}
+              error={''}
+            />
+          </TouchableOpacity>
+
+          {/* Another End Time */}
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            onPress={() => {
+              setAnotherToTimePicker(true);
+            }}>
+            <TextInputComponent
+              placeholder={t('newDeveloper.Timeends')}
+              value={anotherToTime}
+              editable={false}
+              onChangeText={() => {}}
+              containerStyle={{
+                marginHorizontal: windowWidth(2),
+              }}
+              error={''}
+            />
+          </TouchableOpacity>
+        </View>
+
+          {/* Another Time Pickers */}
+          {anotherFromTimePicker && (
+            <TimepickerSelectTimeTwentyFourHours
+              setDatePicker={setAnotherFromTimePicker}
+              setScheduleDate={setAnotherFromTime}
+            />
+          )}
+
+          {anotherToTimePicker && (
+            <TimepickerSelectTimeTwentyFourHours
+              setDatePicker={setAnotherToTimePicker}
+              setScheduleDate={setAnotherToTime}
+            />
+          )}
+          
         </>
         }
 

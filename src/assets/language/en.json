@@ -1021,7 +1021,7 @@
             "DiscountCostpercentage":"Discount Cost percentage",
             "CampaignCostpercentage":"Campaign Cost percentage",
             "CouponCostpercentage":"Coupon Cost percentage",
-            "ServiceProviderApp":"Provider & Vendor App",
+            "ServiceProviderApp":"Dorkar Seller App",
             "AccountInformation":"Account Information",
             "Businesssettings":"Business settings",
             "BizInformationIdentityType":"Identity Type",
@@ -1475,6 +1475,7 @@
            "Transferredto":"Transferred to",
            "PaidVia":"Paid via",
            "ConversationList":"Conversation List",
+           "AvailableAnotherSlots":"Another available start and end time"
         
            
             

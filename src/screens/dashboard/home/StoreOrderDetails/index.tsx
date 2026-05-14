@@ -5,7 +5,7 @@ import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity, ScrollView,
 import { useValues } from '../../../../../App';
 import Header from '@commonComponents/header';
 import SwipeButton from './SwipeButton';
-import { cancelOrderProcess, changeStatusToHandover, confirmOrderProcess, getCurrentOrderDetails, getOrderProductList, processingOrderProcess } from '@src/services/store/order.service';
+import { cancelOrderProcess, changeStatusToHandover, confirmOrderProcess, getCurrentOrderDetails, getInvoicePdf, getOrderProductList, processingOrderProcess } from '@src/services/store/order.service';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '@src/navigation/types';
 import Toast from 'react-native-toast-message';
@@ -101,118 +101,149 @@ const StoreOrderDetails = () => {
         );
     };
     //print order invoice
-    const printOrderInvoice = async () => {
-        const html = `
-         <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Invoice</title>
-</head>
-<body style="font-family: Arial, sans-serif; font-size: 14px; margin: 0; padding: 20px; line-height: 1.4;">
-  <div style="max-width: 600px; margin: auto; border: 1px solid #ddd; padding: 15px;">
-     
-    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
-      <div>
-        <strong>${'newDeveloper.OrderID'}:</strong> #${orderMainDetails?.id}<br>
-        <small>${ordertime?.day} ${ordertime?.month} ${ordertime?.year}  ${ordertime?.hours}:${ordertime?.minutes} ${ordertime?.ampm}</small>
-      </div>
-      <div style="text-align: right;">
-        <strong>${convertToTitleCase(orderMainDetails?.payment_method)}</strong>
-      </div>
-    </div>
 
-    <!-- Order Details -->
-    <div style="margin-top: 10px;">
-      <strong>${t(`newDeveloper.${orderMainDetails.order_type}`)}:</strong> ${convertToTitleCase(orderMainDetails?.order_status)}<br>
+//     const printOrderInvoice = async () => {
+
+//         if(OrderId){
+//             const response:Response = await getInvoicePdf(OrderId)
+
+//             // console.log('response', response?.data?.food_invoice_url);
+//             const invoicePdfUrl = response?.data?.food_invoice_url;
+//         }
+
+//         const html = `
+//          <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//   <meta charset="UTF-8">
+//   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//   <title>Invoice</title>
+// </head>
+// <body style="font-family: Arial, sans-serif; font-size: 14px; margin: 0; padding: 20px; line-height: 1.4;">
+//   <div style="max-width: 600px; margin: auto; border: 1px solid #ddd; padding: 15px;">
+     
+//     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
+//       <div>
+//         <strong>${'newDeveloper.OrderID'}:</strong> #${orderMainDetails?.id}<br>
+//         <small>${ordertime?.day} ${ordertime?.month} ${ordertime?.year}  ${ordertime?.hours}:${ordertime?.minutes} ${ordertime?.ampm}</small>
+//       </div>
+//       <div style="text-align: right;">
+//         <strong>${convertToTitleCase(orderMainDetails?.payment_method)}</strong>
+//       </div>
+//     </div>
+
+//     <!-- Order Details -->
+//     <div style="margin-top: 10px;">
+//       <strong>${t(`newDeveloper.${orderMainDetails.order_type}`)}:</strong> ${convertToTitleCase(orderMainDetails?.order_status)}<br>
        
-    </div>
+//     </div>
 
      
-    ${
-        orderProductItemList.length > 0 && orderProductItemList.map((item: any, index: number) => {
-            return `<div style="margin-top: 10px; border-top: 1px solid #ddd; padding-top: 10px;">
-      <strong>${t('newDeveloper.Item')}:</strong> ${index + 1}<br>
-      <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
-        <tr>
-          <td style="padding: 5px; border: 1px solid #ddd; text-align: left;">${item?.item_details?.name}</td>
-          <td style="padding: 5px; border: 1px solid #ddd; text-align: right;">X ${item?.quantity}</td>
-          <td style="padding: 5px; border: 1px solid #ddd; text-align: right;">${currSymbol} ${item?.item_details?.price}</td>
-        </tr>
-      </table>
-    </div>`
+//     ${
+//         orderProductItemList.length > 0 && orderProductItemList.map((item: any, index: number) => {
+//             return `<div style="margin-top: 10px; border-top: 1px solid #ddd; padding-top: 10px;">
+//       <strong>${t('newDeveloper.Item')}:</strong> ${index + 1}<br>
+//       <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+//         <tr>
+//           <td style="padding: 5px; border: 1px solid #ddd; text-align: left;">${item?.item_details?.name}</td>
+//           <td style="padding: 5px; border: 1px solid #ddd; text-align: right;">X ${item?.quantity}</td>
+//           <td style="padding: 5px; border: 1px solid #ddd; text-align: right;">${currSymbol} ${item?.item_details?.price}</td>
+//         </tr>
+//       </table>
+//     </div>`
 
-        })
-    }
+//         })
+//     }
     
 
     
-    <div style="margin-top: 10px; border-top: 1px solid #ddd; padding-top: 10px;">
-      <strong>${t('newDeveloper.CustomerDetails')}:</strong><br>
-      ${orderMainDetails?.delivery_address?.contact_person_name}<br>
-      ${orderMainDetails?.delivery_address?.address}<br>
-    </div>
+//     <div style="margin-top: 10px; border-top: 1px solid #ddd; padding-top: 10px;">
+//       <strong>${t('newDeveloper.CustomerDetails')}:</strong><br>
+//       ${orderMainDetails?.delivery_address?.contact_person_name}<br>
+//       ${orderMainDetails?.delivery_address?.address}<br>
+//     </div>
 
-    <div style="margin-top: 10px; border-top: 1px solid #ddd; padding-top: 10px;">
-      <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
-        <tr>
-          <td style="padding: 5px; text-align: left;">${t('newDeveloper.ItemPrice')}</td>
-          <td style="padding: 5px; text-align: right;">${currSymbol}${totalItemPrice}</td>
-        </tr>   
-        <tr>
-          <td style="padding: 5px; text-align: left;">${t('newDeveloper.Discount')}</td>
-          <td style="padding: 5px; text-align: right;">(-) ${currSymbol}${orderMainDetails?.store_discount_amount}</td>
-        </tr>
-         ${orderMainDetails?.coupon_discount_amount > 0 ? `<tr>
-            <td style="padding: 5px; text-align: left;">${t('newDeveloper.Coupondiscount')}</td>
-            <td style="padding: 5px; text-align: right;">(-) ${currSymbol}${orderMainDetails?.coupon_discount_amount}</td>
-          </tr>`: ''}
+//     <div style="margin-top: 10px; border-top: 1px solid #ddd; padding-top: 10px;">
+//       <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+//         <tr>
+//           <td style="padding: 5px; text-align: left;">${t('newDeveloper.ItemPrice')}</td>
+//           <td style="padding: 5px; text-align: right;">${currSymbol}${totalItemPrice}</td>
+//         </tr>   
+//         <tr>
+//           <td style="padding: 5px; text-align: left;">${t('newDeveloper.Discount')}</td>
+//           <td style="padding: 5px; text-align: right;">(-) ${currSymbol}${orderMainDetails?.store_discount_amount}</td>
+//         </tr>
+//          ${orderMainDetails?.coupon_discount_amount > 0 ? `<tr>
+//             <td style="padding: 5px; text-align: left;">${t('newDeveloper.Coupondiscount')}</td>
+//             <td style="padding: 5px; text-align: right;">(-) ${currSymbol}${orderMainDetails?.coupon_discount_amount}</td>
+//           </tr>`: ''}
 
         
-          ${orderMainDetails?.ref_bonus_amount > 0 ?  `<tr>
-          <td style="padding: 5px; text-align: left;">${t('newDeveloper.Referraldiscount')}</td>
-          <td style="padding: 5px; text-align: right;">(-) ${currSymbol}${orderMainDetails?.ref_bonus_amount}</td>
-        </tr>` :''}
-        <tr>
-          <td style="padding: 5px; text-align: left;">${t('newDeveloper.VatTax')}</td>
-          <td style="padding: 5px; text-align: right;">(+) ${currSymbol}${orderMainDetails?.total_tax_amount}</td>
-        </tr>
-         <tr>
-          <td style="padding: 5px; text-align: left;">${t('newDeveloper.DeliveryManTips')}</td>
-          <td style="padding: 5px; text-align: right;">(+) ${currSymbol}${orderMainDetails?.dm_tips}</td>
-        </tr>
-        <tr>
-          <td style="padding: 5px; text-align: left;">${t('newDeveloper.PlatformCharge')}</td>
-          <td style="padding: 5px; text-align: right;">(+) ${currSymbol}${orderMainDetails?.additional_charge}</td>
-        </tr>
-        <tr>
-          <td style="padding: 5px; text-align: left;">${t('newDeveloper.DeliveryFee')}</td>
-          <td style="padding: 5px; text-align: right;">(+) ${currSymbol}${orderMainDetails?.delivery_charge}</td>
-        </tr>
-        <tr>
-          <td style="padding: 5px; text-align: left;">${t('newDeveloper.Extrapackaging')}</td>
-          <td style="padding: 5px; text-align: right;">(+)  ${currSymbol}${orderMainDetails?.extra_packaging_amount}</td>
-        </tr>
-      </table>
-    </div>
-    <div style="margin-top: 10px; border-top: 1px solid #ddd; padding-top: 10px; text-align: right;">
-      <strong>${t('newDeveloper.TotalAmount')}: ${currSymbol}${orderMainDetails?.order_amount}</strong>
-    </div>
-  </div>
-</body>
-</html>
+//           ${orderMainDetails?.ref_bonus_amount > 0 ?  `<tr>
+//           <td style="padding: 5px; text-align: left;">${t('newDeveloper.Referraldiscount')}</td>
+//           <td style="padding: 5px; text-align: right;">(-) ${currSymbol}${orderMainDetails?.ref_bonus_amount}</td>
+//         </tr>` :''}
+//         <tr>
+//           <td style="padding: 5px; text-align: left;">${t('newDeveloper.VatTax')}</td>
+//           <td style="padding: 5px; text-align: right;">(+) ${currSymbol}${orderMainDetails?.total_tax_amount}</td>
+//         </tr>
+//          <tr>
+//           <td style="padding: 5px; text-align: left;">${t('newDeveloper.DeliveryManTips')}</td>
+//           <td style="padding: 5px; text-align: right;">(+) ${currSymbol}${orderMainDetails?.dm_tips}</td>
+//         </tr>
+//         <tr>
+//           <td style="padding: 5px; text-align: left;">${t('newDeveloper.PlatformCharge')}</td>
+//           <td style="padding: 5px; text-align: right;">(+) ${currSymbol}${orderMainDetails?.additional_charge}</td>
+//         </tr>
+//         <tr>
+//           <td style="padding: 5px; text-align: left;">${t('newDeveloper.DeliveryFee')}</td>
+//           <td style="padding: 5px; text-align: right;">(+) ${currSymbol}${orderMainDetails?.delivery_charge}</td>
+//         </tr>
+//         <tr>
+//           <td style="padding: 5px; text-align: left;">${t('newDeveloper.Extrapackaging')}</td>
+//           <td style="padding: 5px; text-align: right;">(+)  ${currSymbol}${orderMainDetails?.extra_packaging_amount}</td>
+//         </tr>
+//       </table>
+//     </div>
+//     <div style="margin-top: 10px; border-top: 1px solid #ddd; padding-top: 10px; text-align: right;">
+//       <strong>${t('newDeveloper.TotalAmount')}: ${currSymbol}${orderMainDetails?.order_amount}</strong>
+//     </div>
+//   </div>
+// </body>
+// </html>
 
-        `;
+//         `;
 
+//         try {
+//             await RNPrint.print({
+//                 html,
+//             });
+//         } catch (error) {
+//             console.error('Error generating or printing PDF:', error);
+//         }
+//     };
+
+    const printOrderInvoice = async () => {
         try {
+            if (!OrderId) {
+                return;
+            }
+            const response: Response = await getInvoicePdf(OrderId);
+            const invoicePdfUrl = response?.data?.food_invoice_url;
+            // console.log('invoicePdfUrl', invoicePdfUrl);
+            if (!invoicePdfUrl) {
+                Alert.alert('PDF not found');
+                return;
+            }
             await RNPrint.print({
-                html,
+                filePath: invoicePdfUrl,
             });
         } catch (error) {
-            console.error('Error generating or printing PDF:', error);
+            console.error('Error printing PDF:', error);
         }
     };
+
+
     const refreshHomeOrders = ()=>{
          dispatch(storeHomeOrderActions.setData({field:'refreshOrders','data':true}))
     }

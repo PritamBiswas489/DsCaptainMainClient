@@ -123,3 +123,13 @@ export const changeStatusToHandover = async (orderid:string | number): Promise<R
 	}
 
 }
+
+
+export const getInvoicePdf = async(OrderId:string | number): Promise<Response> =>{
+	try {
+		const response = await api.get(`/vendor/order/invoice/${OrderId}`);
+		return response;
+	} catch (error:any) {
+		return error.response;
+	}
+}

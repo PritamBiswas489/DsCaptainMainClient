@@ -167,7 +167,7 @@ export default function InputView(
         <DashLine />
         <View style={{ flexDirection: "row" }}>
           {/* Start Date */}
-          <TouchableOpacity style={{ flex: 1 }} onPress={() => { setStartDatepicker(true) }}>
+          {/* <TouchableOpacity style={{ flex: 1 }} onPress={() => { setStartDatepicker(true) }}>
             <View>
               <Text style={[
                 styles.inputLabel,
@@ -184,10 +184,10 @@ export default function InputView(
                 containerStyle={{ marginTop: windowHeight(1) }}
               />
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           {/* Expire Date */}
-          <TouchableOpacity style={{ flex: 1 }} onPress={() => { setEndDatepicker(true) }}>
+          {/* <TouchableOpacity style={{ flex: 1 }} onPress={() => { setEndDatepicker(true) }}>
             <View style={{ flex: 1 }}>
               <Text style={[
                 styles.inputLabel,
@@ -204,7 +204,88 @@ export default function InputView(
                 containerStyle={{ marginTop: windowHeight(1) }}
               />
             </View>
+          </TouchableOpacity> */}
+
+          {/* Start Date */}
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            activeOpacity={1}
+            onPress={() => {
+              if (!startDatepicker) {
+                setStartDatepicker(true);
+              }
+            }}
+          >
+            <View>
+              <Text style={[
+                styles.inputLabel,
+                { color: isDark ? appColors.white : appColors.darkText }
+              ]}>
+                {t('newDeveloper.StartDate')} <Text style={{ color: 'red' }}>*</Text>
+              </Text>
+
+              <TextInputComponent
+                placeholder={t('newDeveloper.StartDate')}
+                value={startDate}
+                editable={false}
+                onChangeText={() => {}}
+                error={errorStartDate}
+                containerStyle={{ marginTop: windowHeight(1) }}
+              />
+            </View>
           </TouchableOpacity>
+
+          {/* Expire Date */}
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            activeOpacity={1}
+            onPress={() => {
+              if (!endDatepicker) {
+                setEndDatepicker(true);
+              }
+            }}
+          >
+            <View style={{ flex: 1 }}>
+              <Text style={[
+                styles.inputLabel,
+                { color: isDark ? appColors.white : appColors.darkText }
+              ]}>
+                {t('newDeveloper.ExpireDate')} <Text style={{ color: 'red' }}>*</Text>
+              </Text>
+
+              <TextInputComponent
+                placeholder={t('newDeveloper.ExpireDate')}
+                value={expireDate}
+                editable={false}
+                onChangeText={() => {}}
+                error={errorExpireDate}
+                containerStyle={{ marginTop: windowHeight(1) }}
+              />
+            </View>
+          </TouchableOpacity>
+
+          {/* Date Pickers */}
+          {startDatepicker && (
+            <DatePickerSelector
+              setDatePicker={(value: any) => {
+                setTimeout(() => {
+                  setStartDatepicker(value);
+                }, 200);
+              }}
+              setScheduleDate={setStartDate}
+            />
+          )}
+
+          {endDatepicker && (
+            <DatePickerSelector
+              setDatePicker={(value: any) => {
+                setTimeout(() => {
+                  setEndDatepicker(value);
+                }, 200);
+              }}
+              setScheduleDate={setExpireDate}
+            />
+          )}
         </View>
         <DashLine />
         {/* Discount value */}
@@ -264,8 +345,8 @@ export default function InputView(
           />
         </View></>}
       </View>
-      {startDatepicker && <DatePickerSelector setDatePicker={setStartDatepicker} setScheduleDate={setStartDate} />}
-      {endDatepicker && <DatePickerSelector setDatePicker={setEndDatepicker} setScheduleDate={setExpireDate} />}
+      {/* {startDatepicker && <DatePickerSelector setDatePicker={setStartDatepicker} setScheduleDate={setStartDate} />}
+      {endDatepicker && <DatePickerSelector setDatePicker={setEndDatepicker} setScheduleDate={setExpireDate} />} */}
     </>
   );
 }
