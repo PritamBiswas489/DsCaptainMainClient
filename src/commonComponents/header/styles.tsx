@@ -23,8 +23,8 @@ export const styles = StyleSheet.create({
   },
 
   circleView: {
-    height: windowWidth(12),
-    width: windowWidth(12),
+    height: windowWidth(10),
+    width: windowWidth(10),
     borderRadius: windowHeight(10),
     backgroundColor: appColors.white,
     alignItems: 'center',

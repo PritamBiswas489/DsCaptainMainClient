@@ -41,7 +41,7 @@ const StoreCartModal = ({ visible, onClose, setModalVisible }: any) => {
             <Icon name="close" size={24} color={isDark ? appColors.white : appColors.darkText} />
           </TouchableOpacity>
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             activeOpacity={0.9}
             onPress={() => {
               setModalVisible(false), navigate('StoreSettings');
@@ -65,11 +65,11 @@ const StoreCartModal = ({ visible, onClose, setModalVisible }: any) => {
               ]}>
               {t('newDeveloper.StoreSettings')}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
-          <View style={styles.separator} />
+          {/* <View style={styles.separator} /> */}
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             activeOpacity={0.9}
             onPress={() => {
               setModalVisible(false), navigate('StoreUpdateAnnouncement');
@@ -93,9 +93,9 @@ const StoreCartModal = ({ visible, onClose, setModalVisible }: any) => {
               ]}>
               {t('newDeveloper.UpdateAnnouncement')}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
-          <View style={styles.separator} />
+          {/* <View style={styles.separator} /> */}
 
           <TouchableOpacity
             activeOpacity={0.9}

@@ -14,6 +14,8 @@ import {headerTypes} from './types';
 import {windowWidth} from '@theme/appConstant';
 import {useValues} from '../../../App';
 import appColors from '@theme/appColors';
+import Icon from 'react-native-vector-icons/Feather';
+import { NotificationVendor } from '@src/screens/notificationVendor';
  
  
 import { SubscribeBtn } from '@src/screens/dashboard/service/serviceList/subscribeBtn';
@@ -37,6 +39,10 @@ export default function Header({
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const {isDark, t} = useValues();
+
+  // const goToNotification = () => {
+  //   navigation.navigate('Notification');
+  // };
 
   return (
     <View
@@ -85,7 +91,7 @@ export default function Header({
             </Text>
           )}
         </View>
-        <View style={styles.rowView}>
+        {/* <View style={styles.rowView}>
           {trailIcon && (
             <TouchableOpacity
               onPress={
@@ -128,6 +134,74 @@ export default function Header({
             </TouchableOpacity>
           )}
          
+        </View> */}
+
+        <View style={styles.rowView}>
+
+          {/* Bell Icon */}
+          {/* <TouchableOpacity
+            onPress={goToNotification}
+            activeOpacity={0.9}
+            style={[
+              styles.circleView,
+              {
+                backgroundColor: isDark
+                  ? appColors.darkCard
+                  : appColors.white,
+                borderWidth: isDark ? 0.1 : 1,
+                marginRight: 10,
+              },
+            ]}>
+            <Icon
+              name="bell"
+              size={20}
+              color={isDark ? appColors.white : appColors.darkText}
+            />
+          </TouchableOpacity> */}
+
+          {trailIcon && (
+            <TouchableOpacity
+              onPress={
+                gotoScreen as unknown as (event: GestureResponderEvent) => void
+              }
+              activeOpacity={0.9}
+              style={[
+                styles.circleView,
+                {
+                  right: windowWidth(3),
+                  backgroundColor: isDark
+                    ? appColors.darkCard
+                    : appColors.white,
+                  borderWidth: isDark ? 0.1 : 1,
+                },
+                circleStyle,
+              ]}>
+              {trailIcon}
+            </TouchableOpacity>
+          )}
+
+          {subscribeServiceBtn}
+
+          {trailIcon1 && (
+            <TouchableOpacity
+              onPress={
+                onTrailIcon as unknown as (event: GestureResponderEvent) => void
+              }
+              activeOpacity={0.9}
+              style={[
+                styles.circleView,
+                trail1IconContainer,
+                {
+                  backgroundColor: isDark
+                    ? appColors.darkCard
+                    : appColors.white,
+                  borderWidth: isDark ? 0.1 : 1,
+                },
+              ]}>
+              {trailIcon1 && trailIcon1}
+            </TouchableOpacity>
+          )}
+
         </View>
       </View>
       {content && content}

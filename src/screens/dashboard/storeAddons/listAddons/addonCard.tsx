@@ -81,6 +81,8 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         padding: 16,
+        paddingLeft: 20,
+        paddingRight:20,
         borderRadius: 10,
         elevation: 3,
         alignItems: 'center',
@@ -126,6 +128,7 @@ const styles = StyleSheet.create({
     },
     moreOptionsText: {
         fontSize: 18,
+        color:'#000',
     },
     bottomModal: {
         justifyContent: 'flex-end',

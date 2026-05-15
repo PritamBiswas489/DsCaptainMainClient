@@ -85,6 +85,7 @@ const DailyScheduleTime: React.FC = () => {
     formData.append('opening_time', opening_time)
     formData.append('closing_time', closing_time)
     formData.append('day', daysOfWeek.indexOf(selectedDay))
+    console.log('formData', formData);
     const response: Response = await addSchedule(formData)
     if (response?.data?.id) {
       Toast.show({
@@ -144,21 +145,49 @@ const DailyScheduleTime: React.FC = () => {
           onPress: () => console.log("Cancel Pressed"), // Action when Cancel is pressed
           style: "cancel",
         },
+        // {
+        //   text: "Confirm",
+        //   onPress: () => { //delete schedule
+        //     const cloneFields = { ...fields }
+        //     const updated = cloneFields[day].filter(ele => ele.scheduleId !== scheduleId)
+        //     cloneFields[day] = updated
+        //     setFields(cloneFields)
+        //     deleteSchedule(scheduleId)
+        //     Toast.show({
+        //       type: 'success',
+        //       text1: 'Success',
+        //       text2: t('newDeveloper.successfullyDeleted'),
+        //     });
+        //   },
+        // },
         {
           text: "Confirm",
-          onPress: () => { //delete schedule
+          onPress: async () => {
+
             const cloneFields = { ...fields }
-            const updated = cloneFields[day].filter(ele => ele.scheduleId !== scheduleId)
+            const updated = cloneFields[day].filter(
+              ele => ele.scheduleId !== scheduleId
+            )
+
             cloneFields[day] = updated
             setFields(cloneFields)
-            deleteSchedule(scheduleId)
+
+            await deleteSchedule(scheduleId)
+
+            // refresh redux store
+            const responseuser = await storeAuthService()
+
+            if (responseuser?.data?.id) {
+              dispatch(storeProfileDataActions.setData(responseuser?.data))
+            }
+
             Toast.show({
               type: 'success',
               text1: 'Success',
               text2: t('newDeveloper.successfullyDeleted'),
             });
           },
-        },
+        }
       ],
       { cancelable: false }
     );
@@ -171,22 +200,46 @@ const DailyScheduleTime: React.FC = () => {
 
   }
 
+  // useEffect(() => {
+  //   if (schedules.length > 0) {
+  //     schedules.forEach((scDt: ScheduleInterface, scIndex: number) => {
+  //       const scheduleid = scDt.id
+  //       const openingTime = scDt.opening_time
+  //       const closingTime = scDt.closing_time
+  //       const weekDay = scDt.day
+  //       const checkIndex = fields[daysOfWeek[weekDay]].findIndex(ele => ele.scheduleId === scheduleid)
+  //       if (checkIndex === -1) {
+  //         addField(daysOfWeek[weekDay], openingTime, closingTime, scheduleid)
+  //       }
+  //       //  console.log({scheduleid,openingTime,closingTime,weekDay:daysOfWeek[weekDay]})
+  //     })
+  //   }
+  // }, [schedules]
+  // );
+
   useEffect(() => {
-    if (schedules.length > 0) {
-      schedules.forEach((scDt: ScheduleInterface, scIndex: number) => {
-        const scheduleid = scDt.id
-        const openingTime = scDt.opening_time
-        const closingTime = scDt.closing_time
-        const weekDay = scDt.day
-        const checkIndex = fields[daysOfWeek[weekDay]].findIndex(ele => ele.scheduleId === scheduleid)
-        if (checkIndex === -1) {
-          addField(daysOfWeek[weekDay], openingTime, closingTime, scheduleid)
-        }
-        //  console.log({scheduleid,openingTime,closingTime,weekDay:daysOfWeek[weekDay]})
-      })
-    }
-  }, [schedules]
+  const updatedFields: FieldsState = daysOfWeek.reduce(
+    (acc, day) => ({
+      ...acc,
+      [day]: [],
+    }),
+    {} as FieldsState
   );
+
+  if (schedules?.length > 0) {
+    schedules.forEach((scDt: ScheduleInterface) => {
+      const weekDay = daysOfWeek[scDt.day];
+
+      updatedFields[weekDay].push({
+        openingTime: scDt.opening_time,
+        closingTime: scDt.closing_time,
+        scheduleId: scDt.id,
+      });
+    });
+  }
+
+  setFields(updatedFields);
+}, [schedules]);
 
   return (
     <>
