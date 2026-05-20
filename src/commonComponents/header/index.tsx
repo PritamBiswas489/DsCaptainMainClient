@@ -40,9 +40,9 @@ export default function Header({
 
   const {isDark, t} = useValues();
 
-  // const goToNotification = () => {
-  //   navigation.navigate('Notification');
-  // };
+  const goToNotification = () => {
+    navigation.navigate('NotificationVendor');
+  };
 
   return (
     <View
@@ -139,7 +139,7 @@ export default function Header({
         <View style={styles.rowView}>
 
           {/* Bell Icon */}
-          {/* <TouchableOpacity
+          <TouchableOpacity
             onPress={goToNotification}
             activeOpacity={0.9}
             style={[
@@ -157,7 +157,7 @@ export default function Header({
               size={20}
               color={isDark ? appColors.white : appColors.darkText}
             />
-          </TouchableOpacity> */}
+          </TouchableOpacity>
 
           {trailIcon && (
             <TouchableOpacity

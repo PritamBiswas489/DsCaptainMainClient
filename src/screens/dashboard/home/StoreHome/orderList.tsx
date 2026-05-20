@@ -1,78 +1,175 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, FlatList } from "react-native";
 import { useValues } from "../../../../../App";
 import appColors from "@src/theme/appColors";
 import { CurrentOrderInterface } from "@src/interfaces/store/currentOrder.interface";
 import HomeNoFataFound from "@src/commonComponents/homeNoDataFound";
 import { datetimeArr } from "@src/config/utility";
 
-const OrderList: React.FC<{ tabOrders: CurrentOrderInterface[], navigateToOrderDetailsPage: (id: number) => void }> = ({ tabOrders, navigateToOrderDetailsPage }) => {
+// const OrderList: React.FC<{ tabOrders: CurrentOrderInterface[], navigateToOrderDetailsPage: (id: number) => void }> = ({ tabOrders, navigateToOrderDetailsPage }) => {
+  const OrderList: React.FC<{
+    tabOrders: CurrentOrderInterface[],
+    navigateToOrderDetailsPage: (id: number) => void,
+    loadMoreOrders: () => void
+  }> = ({ tabOrders, navigateToOrderDetailsPage, loadMoreOrders }) => {
+
   const { isDark, t } = useValues();
 
   return (
+    // <View style={styles.container}>
+    //   {tabOrders.length > 0 ? (
+    //     <View style={styles.list}>
+    //       {tabOrders.map((item) => {
+    //         const tt = datetimeArr(item.created_at);
+    //         return (
+    //           <TouchableOpacity
+    //             key={item.id}
+    //             onPress={() => navigateToOrderDetailsPage(item.id)}
+    //             style={[
+    //               styles.orderItem,
+    //               { backgroundColor: isDark ? appColors.darkCardBg : appColors.white },
+    //             ]}
+    //           >
+    //             <View style={styles.orderDetails}>
+    //               <Text
+    //                 style={[
+    //                   styles.orderId,
+    //                   { color: isDark ? appColors.white : appColors.darkText },
+    //                 ]}
+    //               >
+    //                 {t("newDeveloper.OrderID")}: {`#${item.id}`}
+    //               </Text>
+    //               <Text
+    //                 style={[
+    //                   styles.orderDate,
+    //                   { color: isDark ? appColors.darkSubText : appColors.darkText },
+    //                 ]}
+    //               >
+    //                 {tt.day} {tt.month} {tt.year} {tt.hours} {tt.minutes} {tt.ampm} |{" "}
+    //                 <Text style={styles.status}>
+    //                   {t(`newDeveloper.${item.order_type}`)}
+    //                 </Text>
+    //               </Text>
+    //             </View>
+    //             <View style={styles.orderInfo}>
+    //               <Text
+    //                 style={[
+    //                   styles.itemCount,
+    //                   { color: isDark ? appColors.darkSubText : appColors.darkText },
+    //                 ]}
+    //               >
+    //                 {item.details_count}{" "}
+    //                 {item.details_count > 1
+    //                   ? t(`newDeveloper.items`)
+    //                   : t(`newDeveloper.item`)}
+    //               </Text>
+    //               <Text
+    //                 style={[
+    //                   styles.arrow,
+    //                   { color: isDark ? appColors.darkSubText : appColors.darkText },
+    //                 ]}
+    //               >
+    //                 &gt;
+    //               </Text>
+    //             </View>
+    //           </TouchableOpacity>
+    //         );
+    //       })}
+    //     </View>
+    //   ) : (
+    //     <HomeNoFataFound message={t("newDeveloper.Nodatafound")} />
+    //   )}
+    // </View>
     <View style={styles.container}>
-      {tabOrders.length > 0 ? (
-        <View style={styles.list}>
-          {tabOrders.map((item) => {
-            const tt = datetimeArr(item.created_at);
-            return (
-              <TouchableOpacity
-                key={item.id}
-                onPress={() => navigateToOrderDetailsPage(item.id)}
-                style={[
-                  styles.orderItem,
-                  { backgroundColor: isDark ? appColors.darkCardBg : appColors.white },
-                ]}
-              >
-                <View style={styles.orderDetails}>
-                  <Text
-                    style={[
-                      styles.orderId,
-                      { color: isDark ? appColors.white : appColors.darkText },
-                    ]}
-                  >
-                    {t("newDeveloper.OrderID")}: {`#${item.id}`}
-                  </Text>
-                  <Text
-                    style={[
-                      styles.orderDate,
-                      { color: isDark ? appColors.darkSubText : appColors.darkText },
-                    ]}
-                  >
-                    {tt.day} {tt.month} {tt.year} {tt.hours} {tt.minutes} {tt.ampm} |{" "}
-                    <Text style={styles.status}>
-                      {t(`newDeveloper.${item.order_type}`)}
-                    </Text>
-                  </Text>
-                </View>
-                <View style={styles.orderInfo}>
-                  <Text
-                    style={[
-                      styles.itemCount,
-                      { color: isDark ? appColors.darkSubText : appColors.darkText },
-                    ]}
-                  >
-                    {item.details_count}{" "}
-                    {item.details_count > 1
-                      ? t(`newDeveloper.items`)
-                      : t(`newDeveloper.item`)}
-                  </Text>
-                  <Text
-                    style={[
-                      styles.arrow,
-                      { color: isDark ? appColors.darkSubText : appColors.darkText },
-                    ]}
-                  >
-                    &gt;
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-      ) : (
-        <HomeNoFataFound message={t("newDeveloper.Nodatafound")} />
-      )}
+      <FlatList
+        data={tabOrders}
+        keyExtractor={(item) => String(item.id)}
+
+        scrollEnabled={false}
+
+        onEndReached={loadMoreOrders}
+        onEndReachedThreshold={0.2}
+
+        ListEmptyComponent={
+          <HomeNoFataFound message={t("newDeveloper.Nodatafound")} />
+        }
+
+        renderItem={({ item }) => {
+
+          const tt = datetimeArr(item.created_at);
+
+          return (
+            <TouchableOpacity
+              onPress={() => navigateToOrderDetailsPage(item.id)}
+              style={[
+                styles.orderItem,
+                {
+                  backgroundColor: isDark
+                    ? appColors.darkCardBg
+                    : appColors.white
+                },
+              ]}
+            >
+              <View style={styles.orderDetails}>
+                <Text
+                  style={[
+                    styles.orderId,
+                    {
+                      color: isDark
+                        ? appColors.white
+                        : appColors.darkText
+                    },
+                  ]}
+                >
+                  {t("newDeveloper.OrderID")}: #{item.id}
+                </Text>
+
+                <Text
+                  style={[
+                    styles.orderDate,
+                    {
+                      color: isDark
+                        ? appColors.darkSubText
+                        : appColors.darkText
+                    },
+                  ]}
+                >
+                  {tt.day} {tt.month} {tt.year}{" "}
+                  {tt.hours} {tt.minutes} {tt.ampm}
+                </Text>
+              </View>
+
+              <View style={styles.orderInfo}>
+                <Text
+                  style={[
+                    styles.itemCount,
+                    {
+                      color: isDark
+                        ? appColors.darkSubText
+                        : appColors.darkText
+                    },
+                  ]}
+                >
+                  {item.details_count} items
+                </Text>
+
+                <Text
+                  style={[
+                    styles.arrow,
+                    {
+                      color: isDark
+                        ? appColors.darkSubText
+                        : appColors.darkText
+                    },
+                  ]}
+                >
+                  &gt;
+                </Text>
+              </View>
+            </TouchableOpacity>
+          );
+        }}
+      />
     </View>
   );
 };

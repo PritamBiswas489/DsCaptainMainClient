@@ -26,9 +26,18 @@ export const getAllOrders = async(): Promise<Response> =>{
 	}
 }
 //get current orders
-export const getCurrentOrders = async(): Promise<Response> =>{
+// export const getCurrentOrders = async(): Promise<Response> =>{
+// 	try {
+// 		const response = await api.get(`/vendor/current-orders`);
+// 		return response;
+// 	} catch (error:any) {
+// 		return error.response;
+// 	}
+// }
+
+export const getCurrentOrders = async(status: string, limit = 10, offset = 1): Promise<Response> =>{
 	try {
-		const response = await api.get(`/vendor/current-orders`);
+		const response = await api.get(`/vendor/current-orders?order_status=${status}&limit=${limit}&offset=${offset}`);
 		return response;
 	} catch (error:any) {
 		return error.response;
