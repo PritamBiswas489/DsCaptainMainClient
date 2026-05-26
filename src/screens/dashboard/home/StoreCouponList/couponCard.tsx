@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
     },
     moreOptionsText: {
         fontSize: 18,
+        color:'#000',
     },
     bottomModal: {
         justifyContent: 'flex-end',

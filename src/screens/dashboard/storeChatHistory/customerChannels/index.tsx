@@ -86,7 +86,7 @@ export function CustomerChannels({handleScrollCustomerProcessing}:{
                     styles.person,
                     { color: appColors.primary,fontWeight:'bold' },
                   ]}>
-                  {receivertype} 
+                  {receivertype=='Vendor' ? 'Delivery Man' : receivertype} 
                 </Text>
               </View>
             </View>

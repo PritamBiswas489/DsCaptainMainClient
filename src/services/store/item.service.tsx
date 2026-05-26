@@ -67,3 +67,12 @@ export const updateStatus = async(status:boolean,id:number): Promise<Response> =
 	}
 
 }
+
+export const getAllreviews = async() : Promise<Response> => {
+	try {
+		const response = await api.get(`/vendor/item/reviews`);
+		return response;
+	} catch (error:any) {
+		return error.response;
+	}
+}
