@@ -34,6 +34,8 @@ export const getFormattedData = (content:any) =>{
         cover_image : notificationData?.data?.image,
         date:`${day} ${month}`,
         time:`${hours}:${minutes}  ${ampm}`,
+        image_full_url : notificationData?.image_full_url,
+        order_id : notificationData?.data?.order_id,
        }
     });
       return formattedData

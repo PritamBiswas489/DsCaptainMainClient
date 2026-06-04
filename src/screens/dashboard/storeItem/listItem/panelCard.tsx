@@ -73,7 +73,7 @@ const PanelCard: React.FC<PanelCardProps> = ({
                         readonly
                         startingValue={rating}
                         style={styles.rating}
-                        tintColor={isDark ? appColors.darkCardBg : appColors.white}
+                        // tintColor={isDark ? appColors.darkCardBg : appColors.white}
                     />
                 </View>
                 <Text style={[styles.reviews, { color: isDark ? appColors.white : appColors.darkText }]}>({reviews})</Text>
@@ -195,6 +195,7 @@ const styles = StyleSheet.create({
     },
     moreOptionsText: {
         fontSize: 18,
+        color: '#666',
     },
     bottomModal: {
         justifyContent: 'flex-end',
