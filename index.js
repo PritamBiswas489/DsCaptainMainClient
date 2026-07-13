@@ -62,7 +62,7 @@ const ReduxApp = () => {
   return (
     <Provider store={store}>
       <App />
-      <Toast ref={(ref) => Toast.setRef(ref)} />
+      <Toast />
     </Provider>
   );
 };

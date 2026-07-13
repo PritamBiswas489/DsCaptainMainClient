@@ -50,6 +50,9 @@ react {
     //
     //   The list of flags to pass to the Hermes compiler. By default is "-O", "-output-source-map"
     // hermesFlags = ["-O", "-output-source-map"]
+
+    /* Autolinking */
+    autolinkLibrariesWithApp()
 }
 
 /**
@@ -120,15 +123,12 @@ dependencies {
     implementation("com.facebook.react:react-android")
     implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
     implementation("com.google.firebase:firebase-analytics")
-    // For animated GIF support
-    implementation 'com.facebook.fresco:animated-gif:3.1.3'
-    
-    // For WebP support, including animated WebP
-    implementation 'com.facebook.fresco:animated-webp:3.1.3'
-    implementation 'com.facebook.fresco:webpsupport:3.1.3'
+    // For animated GIF support (version must match React Native's Fresco version)
+    implementation 'com.facebook.fresco:animated-gif:3.6.0'
 
-    // For WebP support, without animations
-    implementation 'com.facebook.fresco:webpsupport:3.1.3'
+    // For WebP support, including animated WebP
+    implementation 'com.facebook.fresco:animated-webp:3.6.0'
+    implementation 'com.facebook.fresco:webpsupport:3.6.0'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
 
     if (hermesEnabled.toBoolean()) {
@@ -138,5 +138,10 @@ dependencies {
     }
 }
 
-apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+// react-native-image-crop-picker pins ucrop:2.2.5-native, whose x86_64
+// libucrop.so is only 4KB-aligned; 2.2.11-native is 16KB-aligned on all ABIs.
+configurations.all {
+    resolutionStrategy.force 'com.github.yalantis:ucrop:2.2.11-native'
+}
+
 apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")

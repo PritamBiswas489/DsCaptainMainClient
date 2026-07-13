@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm pack *)",
+      "Bash(tar xzf *)",
+      "Bash(python3 -c \"import json; p=json.load\\(open\\('package/template/package.json'\\)\\); print\\(json.dumps\\(p['dependencies'],indent=1\\)\\); print\\(json.dumps\\(p['devDependencies'],indent=1\\)\\)\")",
+      "Bash(grep -v '^$')",
+      "Bash(npm view *)",
+      "Bash(python3 -c \"import json,sys; vs=json.load\\(sys.stdin\\); print\\('reanimated 3.17.x:', [v for v in vs if v.startswith\\('3.17.'\\) and '-' not in v]\\); print\\('last 3.x:', [v for v in vs if v.startswith\\('3.'\\) and '-' not in v][-3:]\\)\")",
+      "Bash(python3 -c \"import json,sys; vs=json.load\\(sys.stdin\\); print\\('screens 4.9/4.10:', [v for v in vs if \\(v.startswith\\('4.9.'\\) or v.startswith\\('4.10.'\\)\\) and '-' not in v]\\)\")",
+      "Bash(rm -rf node_modules package-lock.json)",
+      "Bash(npm install *)",
+      "Bash(java -version)",
+      "Read(//Users/aqualeaf_mac_2/Library/Android/sdk/ndk/**)",
+      "Read(//Users/aqualeaf_mac_2/Library/Android/sdk/build-tools/**)",
+      "Read(//Users/aqualeaf_mac_2/Library/Android/sdk/platforms/**)",
+      "Bash(./gradlew clean *)",
+      "Bash(./gradlew bundleRelease)",
+      "Bash(python3 -c \"import json,sys; vs=json.load\\(sys.stdin\\); print\\([v for v in vs if v.startswith\\('13.13'\\) and '-' not in v]\\)\")",
+      "Bash(python3 -c \"import json,sys; vs=json.load\\(sys.stdin\\); print\\([v for v in vs if '-' not in v][-5:]\\)\")",
+      "Bash(python3 -c \"import json,sys; vs=json.load\\(sys.stdin\\); print\\([v for v in vs if '-' not in v]\\)\")",
+      "Bash(npm uninstall *)",
+      "Bash(python3 -c \"import json,sys; vs=json.load\\(sys.stdin\\); print\\([v for v in vs if '-' not in v][-10:]\\)\")",
+      "Bash(unzip -q -o /Users/aqualeaf_mac_2/Desktop/claude/ds/DsCaptainMainClient/android/app/build/outputs/bundle/release/app-release.aab 'base/lib/arm64-v8a/*' -d aab_final)",
+      "Bash(python3 check_align.py aab_final/base/lib/arm64-v8a/*.so)",
+      "Bash(adb -s R5CT51NLB7H logcat -d -t 300)",
+      "Bash(adb -s R5CT51NLB7H shell \"pidof com.dorkarmall.in_seller\")",
+      "Bash(python3 -c \"import json,sys; vs=json.load\\(sys.stdin\\); print\\([v for v in vs if '-' not in v][-8:]\\)\")",
+      "Bash(curl -s https://jitpack.io/api/builds/com.github.yalantis/ucrop)",
+      "Bash(python3 -m json.tool)",
+      "Bash(curl -sL -o ucrop-2.2.11-native.aar https://jitpack.io/com/github/yalantis/ucrop/2.2.11-native/ucrop-2.2.11-native.aar)",
+      "Bash(unzip -q ucrop-2.2.11-native.aar 'jni/*' -d ucrop_check)",
+      "Bash(python3 check_align.py ucrop_check/jni/*/libucrop.so)",
+      "Bash(unzip -q -o /Users/aqualeaf_mac_2/Desktop/claude/ds/DsCaptainMainClient/android/app/build/outputs/bundle/release/app-release.aab 'base/lib/*' -d aab_v2)",
+      "Bash(python3 check_align.py aab_v2/base/lib/arm64-v8a/*.so aab_v2/base/lib/x86_64/*.so)"
+    ]
+  }
+}

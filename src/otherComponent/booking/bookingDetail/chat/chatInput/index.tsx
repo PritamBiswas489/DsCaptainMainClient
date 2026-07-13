@@ -6,7 +6,7 @@ import appColors from '@theme/appColors';
 import { useValues } from '../../../../../../App';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { launchImageLibrary, ImageLibraryOptions, Asset } from 'react-native-image-picker';
-import DocumentPicker, { DocumentPickerResponse } from 'react-native-document-picker';
+import { pick, types as documentTypes, isErrorWithCode, errorCodes, DocumentPickerResponse } from '@react-native-documents/picker';
 import { limitWords } from '@src/config/utility';
 
 export default function ChatInput({
@@ -80,8 +80,8 @@ export default function ChatInput({
   };
   const openDocumentLibrary = async () => {
     try {
-      const result: DocumentPickerResponse[] = await DocumentPicker.pick({
-        type: [DocumentPicker.types.allFiles], // You can limit this to specific types (e.g., `DocumentPicker.types.pdf`)
+      const result: DocumentPickerResponse[] = await pick({
+        type: [documentTypes.allFiles], // You can limit this to specific types (e.g., `documentTypes.pdf`)
       });
       
       // Assuming the user picks only one file, you can handle multiple as well
@@ -97,7 +97,7 @@ export default function ChatInput({
 
       console.log('File picked:', file);
     } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
+      if (isErrorWithCode(err) && err.code === errorCodes.OPERATION_CANCELED) {
         console.log('User cancelled document picker');
       } else {
         Alert.alert('Error', 'Something went wrong while picking the document');
