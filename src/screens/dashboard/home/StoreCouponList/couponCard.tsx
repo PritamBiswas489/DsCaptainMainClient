@@ -36,12 +36,12 @@ const CouponCard = ({ item, navigateToEditPage, deleteCouponFromList, updateCoup
 
         ]}>
             <View style={styles.iconContainer}>
-                <Text style={styles.icon}>{item.discount_type === 'percent' ? '%' : '$'}</Text>
+                <Text style={styles.icon}>{item.discount_type === 'percent' ? '%' : '₹'}</Text>
             </View>
             <View style={styles.detailsContainer}>
                 <Text style={[styles.discountText,
                 { color: isDark ? appColors.white : appColors.darkText }
-                ]}>{item.discount}{item.discount_type === 'percent' ? '%' : '$'} {t('newDeveloper.OFF')}</Text>
+                ]}>{item.discount}{item.discount_type === 'percent' ? '%' : '₹'} {t('newDeveloper.OFF')}</Text>
                 <Text style={[styles.codeText,
                 { color: isDark ? appColors.darkSubText : appColors.darkText }
                 ]}>Code: {item.code}</Text>

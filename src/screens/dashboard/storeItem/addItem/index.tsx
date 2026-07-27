@@ -604,6 +604,8 @@ export function VendorAddItem() {
   }
   const VALIDATE_FORM = (): boolean => {
 
+    // console.log("FORM_STATE", FORM_STATE);
+
     let valid = true;
 
     if (FORM_STATE.itemTitle.trim() === '') {
@@ -659,10 +661,11 @@ export function VendorAddItem() {
           FORM_STATE.fromTime,
           FORM_STATE.toTime
         )
-        if (resCompareTime <= 0) { //compare result two selected
-          showToastError('newDeveloper.invalidTimeRangeSelected');
-          return false
-        }
+        console.log("resCompareTime", resCompareTime)
+        // if (resCompareTime <= 0) { //compare result two selected
+        //   showToastError('newDeveloper.invalidTimeRangeSelected');
+        //   return false
+        // }
       }
       //validating food variation field entry
       if (FORM_STATE.foodVars.length > 0) {

@@ -11,7 +11,7 @@ const StoreStatus: React.FC<{updateStoreStatus:()=>void}> = ({updateStoreStatus}
  
   const { isDark, t, currSymbol } = useValues();
 
-  const { this_month_earning, this_week_earning, todays_earning, stores } = useSelector(
+  const { this_month_earning, this_week_earning, todays_earning, stores, todays_order_count } = useSelector(
     (state: RootState) => state['storeProfileData']
   );
   const store = stores[0]
@@ -29,10 +29,17 @@ const StoreStatus: React.FC<{updateStoreStatus:()=>void}> = ({updateStoreStatus}
     updateStoreStatus()
   } 
 
+  console.log("isStoreClosed", isStoreClosed);
+
   return (
     <View style={styles.container}>
       <View style={styles.statusContainer}>
-        <Text style={styles.statusText}>{t('newDeveloper.StoreTemporarilyClosed')}</Text>
+        {isStoreClosed===true ? (
+          <Text style={styles.statusText}>{t('newDeveloper.StoreOpen')}</Text>
+        ) : (
+          <Text style={styles.statusText}>{t('newDeveloper.StoreClosed')}</Text>
+        )}
+        {/* <Text style={styles.statusText}>{t('newDeveloper.StoreTemporarilyClosed')}</Text> */}
          <SwitchContainer toggleDarkSwitch={toggleSwitch} switchOn={isStoreClosed} />
       </View>
 
@@ -42,10 +49,11 @@ const StoreStatus: React.FC<{updateStoreStatus:()=>void}> = ({updateStoreStatus}
           <Text style={styles.walletText}>{t('newDeveloper.Today')}</Text>
           <Text style={styles.walletAmount}>{currSymbol} {todays_earning}</Text>
         </View>
+        
 
         <View style={styles.divider} />
 
-        <View style={styles.balanceContainer}>
+        {/* <View style={styles.balanceContainer}>
           <View style={styles.balanceColumn}>
             <Text style={styles.balanceText}>{t('newDeveloper.ThisWeek')}</Text>
             <Text style={styles.balanceAmount}>{currSymbol} {this_week_earning}</Text>
@@ -54,7 +62,41 @@ const StoreStatus: React.FC<{updateStoreStatus:()=>void}> = ({updateStoreStatus}
             <Text style={styles.balanceText}>{t('newDeveloper.ThisMonth')}</Text>
             <Text style={styles.balanceAmount}>{currSymbol} {this_month_earning}</Text>
           </View>
+        </View> */}
+
+        <View style={styles.balanceContainer}>
+          <View style={styles.balanceColumn}>
+            <Text style={styles.balanceText}>
+              {t('newDeveloper.ThisWeek')}
+            </Text>
+            <Text style={styles.balanceAmount}>
+              {currSymbol} {this_week_earning}
+            </Text>
+          </View>
+
+          <View style={styles.verticalDivider} />
+
+          <View style={styles.balanceColumn}>
+            <Text style={styles.balanceText}>
+              {t('newDeveloper.TodayOrders')}
+            </Text>
+            <Text style={styles.balanceAmount}>
+              {todays_order_count}
+            </Text>
+          </View>
+
+          <View style={styles.verticalDivider} />
+
+          <View style={styles.balanceColumn}>
+            <Text style={styles.balanceText}>
+              {t('newDeveloper.ThisMonth')}
+            </Text>
+            <Text style={styles.balanceAmount}>
+              {currSymbol} {this_month_earning}
+            </Text>
+          </View>
         </View>
+
       </View>
     </View>
   );
@@ -73,6 +115,7 @@ const styles = StyleSheet.create({
   statusText: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: '#000',
   },
   card: {
     backgroundColor: appColors.primary,
@@ -102,13 +145,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     marginBottom: 16,
   },
+  // balanceContainer: {
+  //   flexDirection: 'row',
+  //   justifyContent: 'space-between',
+  //   width: '100%',
+  // },
+  // balanceColumn: {
+  //   alignItems: 'center',
+  // },
   balanceContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
   },
+
   balanceColumn: {
+    flex: 1,
     alignItems: 'center',
+  },
+
+  verticalDivider: {
+    width: 1,
+    height: 45,
+    backgroundColor: 'rgba(255,255,255,0.4)',
   },
   balanceText: {
     color: '#fff',

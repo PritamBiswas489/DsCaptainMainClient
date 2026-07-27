@@ -1422,6 +1422,8 @@
             "ThisWeek":"This Week",
             "ThisMonth":"This Month",
             "StoreTemporarilyClosed":"Store Temporarily Closed",
+            "StoreOpen" : "Store Open",
+            "StoreClosed" : "Store Temporarily Closed",
             "Pending":"Pending",
             "Confirmed":"Confirmed",
             "Processing":"Processing",
@@ -1475,7 +1477,8 @@
            "Transferredto":"Transferred to",
            "PaidVia":"Paid via",
            "ConversationList":"Conversation List",
-           "AvailableAnotherSlots":"Another available start and end time"
+           "AvailableAnotherSlots":"Another available start and end time",
+           "TodayOrders": "Today Orders"
         
            
             

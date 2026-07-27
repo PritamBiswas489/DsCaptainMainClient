@@ -111,6 +111,7 @@ export default function StoreHome() {
 
   const profileReset = async () => {
     const responseuser = await storeAuthService();
+    console.log("responseuser", responseuser?.data)
     if (responseuser?.data?.id) {
       dispatch(storeProfileDataActions.setData(responseuser?.data));
     }

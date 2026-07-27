@@ -1422,6 +1422,8 @@
             "ThisWeek":"This Week",
             "ThisMonth":"This Month",
             "StoreTemporarilyClosed":"দোকানটি সাময়িকভাবে বন্ধ আছে",
+            "StoreOpen" : "দোকান খোলা আছে",
+            "StoreClosed" : "দোকানটি সাময়িকভাবে বন্ধ আছে",
             "Pending":"Pending",
             "Confirmed":"Confirmed",
             "Processing":"Processing",
@@ -1475,8 +1477,8 @@
            "Transferredto":"Transferred to",
            "PaidVia":"Paid via",
            "ConversationList":"Conversation List",
-           "AvailableAnotherSlots":"Another available start and end time"
-        
+           "AvailableAnotherSlots":"Another available start and end time",
+           "TodayOrders": "Today Orders"
            
             
           
