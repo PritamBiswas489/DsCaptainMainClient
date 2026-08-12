@@ -1,5 +1,7 @@
 import appColors from '@src/theme/appColors';
 import React, { useEffect, useState } from 'react';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { DatePickerModal } from 'react-native-paper-dates';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'; // Ensure you have react-native-vector-icons installed
 import { useValues } from '../../../../../App';
@@ -10,16 +12,18 @@ const SearchExpense = (
     toDate,
     search,
     setDateRangeShow,
-    executeSearchFilter
+    executeSearchFilter,
+    changeDateFilter,
   }
     :
-    {
-      fromDate: string,
-      toDate: string,
-      search: string,
-      setDateRangeShow: React.Dispatch<React.SetStateAction<boolean>>,
-      executeSearchFilter:(value:string)=>void
-    }) => {
+  {
+    fromDate: string,
+    toDate: string,
+    search: string,
+    setDateRangeShow: React.Dispatch<React.SetStateAction<boolean>>,
+    executeSearchFilter:(value:string)=>void,
+    changeDateFilter:(fromDate: Date, toDate: Date)=>void
+  }) => {
 
   const [formattedFromDate, setFormattedFromDate] = useState('')
   const [formattedToDate, setFormattedToDate] = useState('')
@@ -37,7 +41,19 @@ const SearchExpense = (
 
   const [orderId, setOrderId] = useState('');
   const { isDark, t } = useValues();
+
+  const [open, setOpen] = useState(false);
+
+  const [range, setRange] = useState<{
+    startDate: Date | undefined;
+    endDate: Date | undefined;
+  }>({
+    startDate: undefined,
+    endDate: undefined,
+  });
+
   return (
+    <>
     <View style={[styles.container, { backgroundColor: isDark ? appColors.darkCardBg : appColors.white, }]}>
       <View style={[styles.searchContainer, { backgroundColor: isDark ? appColors.darkTheme : appColors.textInput }]}>
         <TextInput
@@ -60,11 +76,47 @@ const SearchExpense = (
         <View style={[styles.dateButton, { backgroundColor: isDark ? appColors.darkTheme : appColors.textInput }]}>
           <Text style={[styles.dateText, { color: isDark ? appColors.white : appColors.darkText }]}>{formattedToDate}</Text>
         </View>
-        <TouchableOpacity onPress={()=>setDateRangeShow(true)} style={styles.calendarButton}>
+        {/* <TouchableOpacity onPress={()=>setDateRangeShow(true)} style={styles.calendarButton}>
+          <Icon name="calendar-today" size={24} color="#fff" />
+        </TouchableOpacity> */}
+        <TouchableOpacity
+          onPress={() => setOpen(true)}
+          style={styles.calendarButton}>
           <Icon name="calendar-today" size={24} color="#fff" />
         </TouchableOpacity>
       </View>
     </View>
+
+    <DatePickerModal
+      locale="en"
+      mode="range"
+      visible={open}
+      onDismiss={() => setOpen(false)}
+      startDate={range.startDate}
+      endDate={range.endDate}
+      onConfirm={({ startDate, endDate }) => {
+          setOpen(false);
+
+          setRange({
+              startDate,
+              endDate,
+          });
+
+          if (startDate && endDate) {
+
+              setFormattedFromDate(startDate.toLocaleDateString());
+              setFormattedToDate(endDate.toLocaleDateString());
+
+              // THIS CALLS YOUR API THROUGH THE PARENT
+              changeDateFilter(startDate, endDate);
+          }
+      }}
+    />
+    </>
+
+    
+
+
   );
 };
 const styles = StyleSheet.create({

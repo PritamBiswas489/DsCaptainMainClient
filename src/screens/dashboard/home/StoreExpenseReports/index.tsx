@@ -176,12 +176,21 @@ export default function StoreExpenseReports() {
                 content={''}
             />
             <View style={{ marginTop: 5 }}>
+                {/* <SearchExpense
+                    fromDate={EXPENSE_STATE.from}
+                    toDate={EXPENSE_STATE.to}
+                    search={''}
+                    setDateRangeShow={setDateRangeShow}
+                    executeSearchFilter={executeSearchFilter}
+                /> */}
+
                 <SearchExpense
                     fromDate={EXPENSE_STATE.from}
                     toDate={EXPENSE_STATE.to}
                     search={''}
                     setDateRangeShow={setDateRangeShow}
                     executeSearchFilter={executeSearchFilter}
+                    changeDateFilter={changeDateFilter}
                 />
             </View>
             <ScrollView

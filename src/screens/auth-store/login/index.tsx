@@ -86,7 +86,7 @@ import { serviceProviderPomotionalCostActions } from '@src/store/redux/service-p
     if(isServiceManLogin){
       setForm({...form, ['email']: 'fashion1@gmail.com',['password']: '@Dorkar1234'});
     }else{
-      setForm({...form, ['email']: 'dorkarbeldanga@gmail.com',['password']: '@Beldanga1234'});
+      // setForm({...form, ['email']: 'dorkarbeldanga@gmail.com',['password']: '@Beldanga1234'});
     }
   },[isServiceManLogin])
 
