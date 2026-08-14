@@ -300,7 +300,7 @@ export default function InputView(
         <DashLine />
 
         {/* Meta title  */}
-        <View style={{ marginTop: 5 }}>
+        {/* <View style={{ marginTop: 5 }}>
           <Text style={[
             styles.inputLabel,
             { color: isDark ? appColors.white : appColors.darkText }
@@ -314,12 +314,12 @@ export default function InputView(
             error={errorMetaTitle}
             containerStyle={{ marginTop: windowHeight(1) }}
           />
-        </View>
+        </View> */}
 
-        <DashLine />
+        {/* <DashLine /> */}
 
         {/* Meta description  */}
-        <View style={{ marginTop: 5 }}>
+        {/* <View style={{ marginTop: 5 }}>
           <Text style={[
             styles.inputLabel,
             { color: isDark ? appColors.white : appColors.darkText }
@@ -335,11 +335,11 @@ export default function InputView(
             inputStyle={styles.inputStyle}
             error={errorMetaDescription}
           />
-        </View>
-        <DashLine />
+        </View> */}
+        {/* <DashLine /> */}
 
         {/* gst percentage panel */}
-        <View style={{ marginTop: 5 }}>
+        {/* <View style={{ marginTop: 5 }}>
           <View style={{ flexDirection: 'row' }}>
             <Text style={[
               styles.inputLabel,
@@ -361,9 +361,9 @@ export default function InputView(
             error={errorGstPercentageValue}
             containerStyle={{ marginTop: windowHeight(1) }}
           />
-        </View>
+        </View> */}
 
-        <DashLine />
+        {/* <DashLine /> */}
 
          {/* item type  veg and non veg */}
          {module_type === 'food' && <><Text style={[
@@ -388,11 +388,12 @@ export default function InputView(
             </View>
           </SafeAreaView>
 
-          <DashLine /></>}
+          {/* <DashLine /> */}
+          </>}
 
 
         {/* schedule order status  */}
-        <View style={{ marginTop: 15 }}>
+        {/* <View style={{ marginTop: 15 }}>
           <View style={{ flexDirection: 'row' }}>
             <Text style={[
               styles.inputLabel,
@@ -404,7 +405,7 @@ export default function InputView(
               switchOn={scheduleOrderStatus}
             />
           </View>
-        </View>
+        </View> */}
 
         <DashLine />
 

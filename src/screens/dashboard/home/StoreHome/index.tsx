@@ -92,6 +92,10 @@ export default function StoreHome() {
   const dispatch = useDispatch();
   const { refreshOrders } = useSelector((state: RootState) => state['storeHomeOrder']);
 
+  const {f_name, l_name } = useSelector((state: RootState) => state['storeProfileData'])
+  
+  let storeName:string | null = `${f_name} ${l_name}`
+
   const [orderState, orderDispatch] = useReducer(reducer, initialState);
   const [statusMenuList, setStatusMenuList] = useState<Tab[]>([
     { tabid: "pending", label: t("newDeveloper.Pending"), count: 0, active: true },
@@ -235,7 +239,8 @@ export default function StoreHome() {
 
   return (
     <View style={[styles.container, { backgroundColor: isDark ? appColors.darkCardBg : appColors.white }]}>
-      <Header showBackArrow={false} title={'newDeveloper.DorkarMallSeller'} />
+      {/* <Header showBackArrow={false} title={'newDeveloper.DorkarMallSeller'} /> */}
+      <Header showBackArrow={false} title={storeName} />
       <ScrollView
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         showsVerticalScrollIndicator={false}

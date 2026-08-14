@@ -33,7 +33,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { UnitInterface } from '@src/interfaces/store/units.interface';
 import { RadioButton } from 'react-native-paper';
 import TimepickerSelectTimeTwentyFourHours from '@src/commonComponents/timepickerSelectTimeTwentyFourHours';
-import TimeRangeInput from '@src/commonComponents/timeRangeInput';
 import { FoodVariation } from '../foodVariation';
 import { foodVariations } from '@src/interfaces/store/foodVariations.interface';
 import { AddonInterface } from '@src/interfaces/store/addons.interface';
@@ -190,8 +189,8 @@ export default function InputView(
     };
     handleImagePickerAllDetails(options, (imageAssets: any) => {
       if (imageAssets?.uri) {
-        const fileSizeInKB = imageAssets.fileSize / 1024;
-        if (fileSizeInKB > 600) {
+        const fileSizeInMB = imageAssets.fileSize / (1024 * 1024);
+        if (fileSizeInMB > 2) {
           Alert.alert(t('newDeveloper.greaterThantwoMbError'))
           return
         }
@@ -215,8 +214,8 @@ export default function InputView(
     };
     handleImagePickerAllDetails(options, (imageAssets: any) => {
       if (imageAssets?.uri) {
-        const fileSizeInKB = imageAssets.fileSize / 1024;
-        if (fileSizeInKB > 600) {
+        const fileSizeInMB = imageAssets.fileSize / (1024 * 1024);
+        if (fileSizeInMB > 2) {
           Alert.alert(t('newDeveloper.greaterThantwoMbError'))
           return
         }
@@ -396,6 +395,13 @@ export default function InputView(
     calculateTotalStock()
      
   }, [variantionsDetails])
+
+
+  const [fromTimePicker, setFromTimePicker] = useState(false)
+  const [toTimePicker, setToTimePicker] = useState(false)
+
+  // const [anotherFromTime, setAnotherFromTime] = useState('');
+  // const [anotherToTime, setAnotherToTime] = useState('');
 
   const [anotherFromTimePicker, setAnotherFromTimePicker] = useState(false);
   const [anotherToTimePicker, setAnotherToTimePicker] = useState(false);
@@ -663,23 +669,115 @@ export default function InputView(
         {/* Available time starts and ends */}
         {module_type === 'food' && 
          <>
-          <TimeRangeInput
-            startTime={fromTime}
-            endTime={toTime}
-            onStartTimeChange={setFromTime}
-            onEndTimeChange={setToTime}
-            label={t('newDeveloper.AvailableSlots')}
-            isDark={isDark}
-          />
+          <View style={{ marginTop: 10, marginLeft: windowWidth(5), }}>
+            <Text style={{ fontSize: windowHeight(2), color: appColors.primary }}>
+              {t('newDeveloper.AvailableSlots')}
+            </Text>
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
+            {/* Available time starts */}
+            <TouchableOpacity style={{ flex: 1 }} activeOpacity={0.9}
+              onPress={() => {
+                setFromTimePicker(true)
+              }}>
+              <TextInputComponent
+                placeholder={t('newDeveloper.Timestarts')}
+                value={fromTime}
+                keyboardType='number-pad'
+                editable={false}
+                onChangeText={value => {
+                }}
+                containerStyle={{ flex: 1, marginHorizontal: windowWidth(2) }}
+                error={''}
+              />
+            </TouchableOpacity>
+            {/* Available time ends */}
+            <TouchableOpacity style={{ flex: 1 }} onPress={() => {
+              setToTimePicker(true)
+            }}>
+              <TextInputComponent
+                placeholder={t('newDeveloper.Timeends')}
+                value={toTime}
+                keyboardType='number-pad'
+                editable={false}
+                onChangeText={value => {
+                }}
+                containerStyle={{ marginHorizontal: windowWidth(2) }}
+                error={''}
+              />
+            </TouchableOpacity>
+            {fromTimePicker && <TimepickerSelectTimeTwentyFourHours setDatePicker={setFromTimePicker} setScheduleDate={setFromTime} />}
+            {toTimePicker && <TimepickerSelectTimeTwentyFourHours setDatePicker={setToTimePicker} setScheduleDate={setToTime} />}
+          </View>
 
-          <TimeRangeInput
-            startTime={anotherFromTime}
-            endTime={anotherToTime}
-            onStartTimeChange={setAnotherFromTime}
-            onEndTimeChange={setAnotherToTime}
-            label={t('newDeveloper.AvailableAnotherSlots')}
-            isDark={isDark}
-          />
+          <View style={{ marginTop: 10, marginLeft: windowWidth(5), }}>
+            <Text style={{ fontSize: windowHeight(2), color: appColors.primary }}>
+              {t('newDeveloper.AvailableAnotherSlots')}
+            </Text>
+          </View>
+
+          {/* Another Available Slot */}
+
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+          
+          {/* Another Start Time */}
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            activeOpacity={0.9}
+            onPress={() => {
+              setAnotherFromTimePicker(true);
+            }}>
+            <TextInputComponent
+              placeholder={t('newDeveloper.Timestarts')}
+              value={anotherFromTime}
+              editable={false}
+              onChangeText={() => {}}
+              containerStyle={{
+                flex: 1,
+                marginHorizontal: windowWidth(2),
+              }}
+              error={''}
+            />
+          </TouchableOpacity>
+
+          {/* Another End Time */}
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            onPress={() => {
+              setAnotherToTimePicker(true);
+            }}>
+            <TextInputComponent
+              placeholder={t('newDeveloper.Timeends')}
+              value={anotherToTime}
+              editable={false}
+              onChangeText={() => {}}
+              containerStyle={{
+                marginHorizontal: windowWidth(2),
+              }}
+              error={''}
+            />
+          </TouchableOpacity>
+        </View>
+
+          {/* Another Time Pickers */}
+          {anotherFromTimePicker && (
+            <TimepickerSelectTimeTwentyFourHours
+              setDatePicker={setAnotherFromTimePicker}
+              setScheduleDate={setAnotherFromTime}
+            />
+          )}
+
+          {anotherToTimePicker && (
+            <TimepickerSelectTimeTwentyFourHours
+              setDatePicker={setAnotherToTimePicker}
+              setScheduleDate={setAnotherToTime}
+            />
+          )}
           
         </>
         }

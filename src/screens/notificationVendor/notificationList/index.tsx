@@ -10,6 +10,8 @@ import { NotificationsInterface } from '@src/interfaces/store/notifications.inte
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/navigation/types';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { windowHeight, windowWidth } from '@theme/appConstant';
 
 type routeProps = NativeStackNavigationProp<RootStackParamList>;
 export default function NotificationList({ listing: notificationList }: { listing: NotificationsInterface[] }) {
@@ -23,153 +25,105 @@ export default function NotificationList({ listing: notificationList }: { listin
   };
   
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <FlatList
         data={notificationList}
         showsVerticalScrollIndicator={false}
-        // renderItem={({ item }) => (
-        //   <View>
-        //     <View style={styles.containerStyle}>
-        //       <View>
-        //         <View style={styles.row}>
-        //           <Text
-        //             style={[
-        //               styles.title,
-        //               {
-        //                 color: isDark
-        //                   ? appColors.white
-        //                   : appColors.darkText,
-        //                 fontFamily: appFonts.NunitoBold,
-        //               },
-        //             ]}>
-        //             {t(item.title)}
-        //           </Text>
-
-
-        //         </View>
-        //         <View style={styles.row}>
-        //           <View
-        //             style={[
-        //               styles.dot,
-        //               {
-        //                 backgroundColor: isDark
-        //                   ? appColors.white
-        //                   : appColors.darkText,
-        //               },
-        //             ]}></View>
-        //           <Text
-        //             style={[
-        //               styles.time,
-        //               {
-        //                 color: isDark
-        //                   ? appColors.white
-        //                   : appColors.darkText,
-        //               },
-        //             ]}>
-        //             {(item.date)}   {item.time}
-        //           </Text>
-
-        //         </View>
-
-        //         <View>
-        //           <Text
-        //             style={[
-        //               styles.content,
-        //               {
-        //                 color: isDark
-        //                   ? appColors.white
-        //                   : appColors.darkText,
-        //               },
-        //             ]}>
-        //             {t(item.description)}
-        //           </Text>
-        //           {item.image_full_url && (
-        //             <Image source={{ uri:`${item.image_full_url}`}} style={styles.image} />
-        //           )}
-        //         </View>
-        //       </View>
-        //     </View>
-        //   </View>
-        // )}
         renderItem={({ item }) => (
-  <TouchableOpacity
-    activeOpacity={item.order_id ? 0.7 : 1}
-    onPress={() => {
-      if (item.order_id && item.order_id !== '') {
-        navigateToOrderDetailsPage(item.order_id);
-      }
-    }}
-  >
-    <View style={styles.containerStyle}>
-      <View>
-        <View style={styles.row}>
-          <Text
-            style={[
-              styles.title,
-              {
-                color: isDark ? appColors.white : appColors.darkText,
-                fontFamily: appFonts.NunitoBold,
-              },
-            ]}>
-            {t(item.title)}
-          </Text>
-        </View>
+          <TouchableOpacity
+            activeOpacity={item.order_id ? 0.7 : 1}
+            onPress={() => {
+              if (item.order_id && item.order_id !== '') {
+                navigateToOrderDetailsPage(item.order_id);
+              }
+            }}
+          >
+            <View style={[styles.notificationCard, isDark && styles.notificationCardDark]}>
+              {/* Card Header */}
+              <View 
+                style={[
+                  styles.cardHeader,
+                  { borderBottomColor: isDark ? appColors.darkBorder : appColors.border }
+                ]}
+              >
+                <View style={styles.headerLeft}>
+                  <Text
+                    style={[
+                      styles.notificationTitle,
+                      {
+                        color: isDark ? appColors.white : appColors.darkText,
+                      },
+                    ]}
+                    numberOfLines={1}
+                  >
+                    {t(item.title)}
+                  </Text>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: windowHeight(0.4) }}>
+                    <Icon 
+                      name="clock-outline" 
+                      size={14} 
+                      color={isDark ? appColors.darkBorder : appColors.darkBorder}
+                      style={{ marginRight: windowWidth(1) }}
+                    />
+                    <Text
+                      style={[
+                        styles.notificationTime,
+                        {
+                          color: isDark ? appColors.darkBorder : appColors.darkBorder,
+                        },
+                      ]}
+                    >
+                      {item.date} • {item.time}
+                    </Text>
+                  </View>
+                </View>
+                
+                {/* Status Badge */}
+                {/* <View 
+                  style={[
+                    styles.statusBadge,
+                    { backgroundColor: appColors.primary }
+                  ]}
+                >
+                  <Text style={styles.statusBadgeText}>NEW</Text>
+                </View> */}
+              </View>
 
-        <View style={styles.row}>
-          <View
-            style={[
-              styles.dot,
-              {
-                backgroundColor: isDark
-                  ? appColors.white
-                  : appColors.darkText,
-              },
-            ]}
-          />
-          <Text
-            style={[
-              styles.time,
-              {
-                color: isDark
-                  ? appColors.white
-                  : appColors.darkText,
-              },
-            ]}>
-            {item.date} {item.time}
-          </Text>
-        </View>
+              {/* Card Body */}
+              <View style={styles.cardBody}>
+                <Text
+                  style={[
+                    styles.notificationDescription,
+                    {
+                      color: isDark ? appColors.white : appColors.darkText,
+                    },
+                  ]}
+                  numberOfLines={3}
+                >
+                  {t(item.description)}
+                </Text>
 
-        <View>
-          <Text
-            style={[
-              styles.content,
-              {
-                color: isDark
-                  ? appColors.white
-                  : appColors.darkText,
-              },
-            ]}>
-            {t(item.description)}
-          </Text>
-
-          {item.image_full_url && (
-            <Image
-              source={{ uri: item.image_full_url }}
-              style={styles.image}
-            />
-          )}
-        </View>
-      </View>
-    </View>
-  </TouchableOpacity>
-)}
-        ItemSeparatorComponent={() => (
-          <View
-            style={[
-              GlobalStyle.horizontalLine,
-              { borderColor: isDark ? appColors.darkBorder : appColors.border },
-            ]}></View>
+                {/* Professional Image Display */}
+                {item.image_full_url && (
+                  <View style={[
+                    styles.imageContainer,
+                    { borderColor: isDark ? appColors.darkBorder : appColors.border }
+                  ]}>
+                    <Image
+                      source={{ uri: item.image_full_url }}
+                      style={styles.notificationImage}
+                    />
+                  </View>
+                )}
+              </View>
+            </View>
+          </TouchableOpacity>
         )}
+        ItemSeparatorComponent={() => (
+          <View style={{ height: windowHeight(0.3), backgroundColor: 'transparent' }} />
+        )}
+        contentContainerStyle={{ paddingVertical: windowHeight(1) }}
+        scrollEnabled
       />
     </View>
   );
