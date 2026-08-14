@@ -35,9 +35,9 @@ const StoreStatus: React.FC<{updateStoreStatus:()=>void}> = ({updateStoreStatus}
     <View style={styles.container}>
       <View style={styles.statusContainer}>
         {isStoreClosed===true ? (
-          <Text style={styles.statusText}>{t('newDeveloper.StoreOpen')}</Text>
-        ) : (
           <Text style={styles.statusText}>{t('newDeveloper.StoreClosed')}</Text>
+        ) : (
+          <Text style={styles.statusText}>{t('newDeveloper.StoreOpen')}</Text>
         )}
         {/* <Text style={styles.statusText}>{t('newDeveloper.StoreTemporarilyClosed')}</Text> */}
          <SwitchContainer toggleDarkSwitch={toggleSwitch} switchOn={isStoreClosed} />

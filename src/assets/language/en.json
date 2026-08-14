@@ -1423,7 +1423,7 @@
             "ThisMonth":"This Month",
             "StoreTemporarilyClosed":"Store Temporarily Closed",
             "StoreOpen" : "Store Open",
-            "StoreClosed" : "Store Temporarily Closed",
+            "StoreClosed" : "Store Closed",
             "Pending":"Pending",
             "Confirmed":"Confirmed",
             "Processing":"Processing",
