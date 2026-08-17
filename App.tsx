@@ -103,13 +103,14 @@ const App: React.FC = () => {
   }
    //save fcm token
    const saveFcmTokenData = async (fcmToken:string) =>{
-        console.log(fcmToken);
+        console.log(" FCM Token:", fcmToken);
         const getLoggedInUserType = await checkLoggedInUserType()
+        console.log("getLoggedInUserType", getLoggedInUserType);
         if(getLoggedInUserType === 'Seller'){
           const formData = new FormData()
           formData.append('fcm_token',fcmToken)
           const response:Response =  await saveVendorFcmTokenProcess(formData)
-          console.log(response?.data)
+          console.log("response?.data", response?.data);
           clearValue('fcmTokenStorage')
 
         }else if(getLoggedInUserType === 'Provider'){

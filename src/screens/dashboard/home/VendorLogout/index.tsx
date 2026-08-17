@@ -12,6 +12,9 @@ type ItemsProps = NativeStackNavigationProp<RootStackParamList>;
 import { logoutClearReduxState } from '@src/services/logout.service';
 import { clearValue } from '@src/utils/localstorage';
 
+import messaging from '@react-native-firebase/messaging';
+import { logoutSeller } from '@src/services/store/profile.service';
+
 export default function VendorLogout() {
     const { navigate, replace } = useNavigation<ItemsProps>();
     const dispatch = useDispatch()
@@ -19,6 +22,19 @@ export default function VendorLogout() {
         (state: RootState) => state['storeProfileData']
     );
     const logout = async ()=>{
+
+        const fcmToken = await messaging().getToken();
+        // console.log("FCM Token on logout:", fcmToken);
+        // return;
+        if(fcmToken) {
+            const formData = new FormData();
+            formData.append('fcmToken',fcmToken);
+            const response :{
+                data: any;
+            } = await logoutSeller(formData);
+            console.log("logout response", response?.data); 
+        }
+
         clearValue('loggedInUserType')
         const response = await deleteAuthTokens();
         logoutClearReduxState(dispatch)

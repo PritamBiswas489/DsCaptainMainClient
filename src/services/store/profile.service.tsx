@@ -65,3 +65,12 @@ export const saveVendorFcmTokenProcess = async (formData:FormData):Promise<Respo
 // 		return error.response;
 // 	}
 // }
+
+export const logoutSeller = async (data:FormData): Promise<Response> => {
+    try {
+		const response = await api.post('/vendor/logout', data);
+		return response;
+	} catch (error:any) {
+		return error.response;
+	}
+}

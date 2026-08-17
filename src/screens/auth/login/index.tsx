@@ -31,6 +31,9 @@ import { useDispatch } from 'react-redux';
 import { serviceProviderBookingReviewActions } from '@src/store/redux/service-provider-booking-review-redux';
 import { serviceProviderPomotionalCostActions } from '@src/store/redux/service-provider-pomotional-cost-redux';
 import { storeProfileDataActions } from '@src/store/redux/store/store-profile-redux';
+import messaging from '@react-native-firebase/messaging';
+import { saveVendorFcmTokenProcess } from '@src/services/store/profile.service';
+import { saveFcmTokenProcess } from '@src/services/profile.service';
 interface LoginResponse {
   data: any;
   status: number;
@@ -39,6 +42,15 @@ interface LoginResponse {
   config: any;
   request?: any;
 }
+
+interface FCMResponse {
+    data: any;
+    status: number;
+    statusText: string;
+    headers: any;
+    config: any;
+    request?: any;
+  }
 
 type loginProps = NativeStackNavigationProp<RootStackParamList>;
 const Login = ({ route }: any) => {
@@ -169,6 +181,13 @@ const Login = ({ route }: any) => {
                         index: 0,
                         routes: [{ name: 'BottomTabSeller' }],
                       });
+
+                      const fcmToken = await messaging().getToken();
+                      if(fcmToken) {
+                        const formData = new FormData()
+                        formData.append('fcm_token',fcmToken)
+                        const response:FCMResponse =  await saveVendorFcmTokenProcess(formData);
+                      }
               } else {
                     Toast.show({
                       type: 'error',
@@ -232,6 +251,13 @@ const Login = ({ route }: any) => {
             index: 0,
             routes: [{ name: 'BottomTab' }],
           });
+
+          const fcmToken = await messaging().getToken();
+          if(fcmToken) {
+            const formData = new FormData()
+            formData.append('fcm_token',fcmToken)
+            const response:FCMResponse =  await saveFcmTokenProcess(formData);
+          }
         } else {
           setIsLoading(false)
           Toast.show({
